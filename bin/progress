@@ -1,0 +1,13 @@
+#!/bin/fish
+
+set units " ▏▎▍▌▋▊▉"
+set full_unit "█"
+set granularity (string length $units)
+
+argparse v/value=!_validate_int m/max=!_validate_int u/unit=!_validate_int -- $argv
+set unit_count (math $_flag_value / $_flag_max \* $_flag_unit)
+set full_unit_count (math floor $unit_count)
+set last_unit_size (math 1 + floor \(\($unit_count - $full_unit_count\) \* $granularity\))
+
+set bar (string join "" (string repeat --count $full_unit_count $full_unit) (if test $last_unit_size -ne 1; string sub -s $last_unit_size -l 1 $units; end))
+string pad --right --width=$_flag_unit "$bar"

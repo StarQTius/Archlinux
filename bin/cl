@@ -1,0 +1,3 @@
+#!/bin/fish
+
+script --quiet --command "$argv" /dev/null < /dev/null

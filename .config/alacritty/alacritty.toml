@@ -1,0 +1,15 @@
+import = [
+    "~/.config/alacritty/theme.toml"
+]
+
+shell = "fish"
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "GohuFont 11 Nerd Font Mono"
+style = "Medium"
+
+[window]
+opacity = 0.5

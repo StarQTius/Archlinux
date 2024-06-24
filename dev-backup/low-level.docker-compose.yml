@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  base:
+    build: .
+    volumes:
+      - .:/code
+    working_dir: /code
+  bash:
+    extends: base
+    command: bash
+  build:
+    extends: base
+    command: sh -c '
+      cmake -B build-chip -DCMAKE_TOOLCHAIN_FILE=cmake/Toolchain.cmake -DFETCHCONTENT_SOURCE_DIR_STM32CUBEG4=_deps/STM32CubeG4
+      && cmake --build build-chip -t app -j4'
+  check:
+    extends: base
+    command: sh -c '
+      cmake -B build-host -DFETCHCONTENT_SOURCE_DIR_STM32CUBEG4=_deps/STM32CubeG4
+      && cmake --build build-host -t check -j4'
+  build-test-chip:
+    extends: base
+    command: sh -c '
+      cmake -B build-chip -DCMAKE_TOOLCHAIN_FILE=cmake/Toolchain.cmake -DFETCHCONTENT_SOURCE_DIR_STM32CUBEG4=_deps/STM32CubeG4
+      && cmake --build build-chip -t check -j4'
+  format:
+    extends: base
+    command: sh -c '
+      clang-format -i $(git ls-files | grep -E "\.(hpp|cpp)$");
+      cmake-format -i $(git ls-files | grep -E "(CMakeLists.txt|\.cmake)$");'
+  lint:
+    extends: base
+    command: sh -c '
+      iwyu_tool.py -p build-chip/compile_commands.json --
+      -Xiwyu --error
+      --target=arm-none-eabi &&
+      git ls-files | grep -E "\.cpp$" | xargs clang-tidy -p build-chip'

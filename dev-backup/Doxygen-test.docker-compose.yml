@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  base:
+    build: .
+    working_dir: /home/docker
+    volumes:
+      - .:/home/docker
+  check:
+    extends: base
+    command: pytest
+  format:
+    extends: base
+    command: sh -c '
+      ruff --fix src;
+      black src'
+  lint:
+    extends: base
+    command: sh -c '
+      mypy src &&
+      ruff src'
+  dummy:
+    extends: base
+    command: sh -c '
+      doxygen Doxyfile &&
+      python3.11 src/main.py'

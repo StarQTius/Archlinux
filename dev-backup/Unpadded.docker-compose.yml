@@ -1,0 +1,72 @@
+version: "3.9"
+services:
+  base:
+    build: .
+    volumes:
+      - .:/code
+    working_dir: /code
+  check:
+    extends: base
+    command: sh -c '
+      cmake -B build -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug &&
+      cmake --build build -t check check_python -j4'
+  check_revamp:
+    extends: base
+    command: sh -c '
+      cmake -B build -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DFETCHCONTENT_FULLY_DISCONNECTED=ON &&
+      cmake --build build -t check_revamp -j4'
+  check_revamp_full:
+    extends: base
+    command: sh -c '
+      cmake -B build -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DFETCHCONTENT_FULLY_DISCONNECTED=OFF &&
+      cmake --build build -t check_revamp -j4'
+  iwyu:
+    extends: base
+    command: sh -c '
+      cmake -B build &&
+      cmake --build build -t iwyu -j4'
+  clang-tidy:
+    extends: base
+    command: sh -c '
+      echo
+        test/basic_ibytestream.cpp
+      | xargs ./clang-tidy-cache clang-tidy
+          -p /code/build
+          --extra-arg="-std=c++17"
+          --extra-arg="-I/code/include"
+          --use-color
+          --enable-check-profile'
+  clang-tidy-some:
+    extends: base
+    command: sh -c '
+      echo
+        test/basic_ibytestream.cpp
+      | xargs ./clang-tidy-cache clang-tidy
+          --checks="-*, $CTCHECK-*"
+          --extra-arg="-std=c++17"
+          --extra-arg="-I/code/include"
+          --use-color
+          --enable-check-profile'
+  gdb:
+    extends: base
+    command: gdb build/test/$TARGET
+  format:
+    extends: base
+    command: sh -c '
+      clang-format -i $(git ls-files | grep -E "\.(hpp|cpp)$");
+      cmake-format -i $(git ls-files | grep -E "(CMakeLists.txt|\.cmake)$");
+      black .;
+      isort .'
+  clangd:
+    extends: base
+    ports:
+      - "50000:50000"
+    command: socat tcp-listen:50000,reuseaddr exec:'clangd --path-mappings="$PWD=/code/"'
+  doc:
+    extends: base
+    command: sh -c '
+      cmake -B build &&
+      cmake --build build -t doc'
+  bash:
+    extends: base
+    command: bash

@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  base:
+    build: .
+    working_dir: /home/docker
+    volumes:
+      - .:/home/docker
+    privileged: true
+    device_cgroup_rules:
+      - 'c 189:* rmw'
+  check:
+    extends: base
+    command: cargo check
+  build:
+    extends: base
+    command: bash -c '
+      xtensa-esp32-elf-gcc -c src/interrupt2.S -o src/interrupt2.o -mtext-section-literals
+      && xtensa-esp32-elf-gcc -c src/interrupt.c -o src/interrupt1.o -mtext-section-literals
+      && xtensa-esp32-elf-ar rv src/interrupt.a src/interrupt1.o src/interrupt2.o
+      && cargo build'
+  flash:
+    extends: base
+    command: bash -c '
+      esptool.py --chip esp32 elf2image --dont-append-digest target/xtensa-esp32-none-elf/debug/rtos-thingy;
+      esptool.py --chip esp32 -p /dev/ttyUSB0 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 40m --flash_size 2MB 0x1000 target/xtensa-esp32-none-elf/debug/rtos-thingy.bin;'
+  gdb:
+    extends: base
+    command: bash -c '
+      (openocd -f interface/ftdi/esp32_devkitj_v1.cfg -f board/esp32-wrover-kit-3.3v.cfg &) >openocd.log 2>&1 &&
+      xtensa-esp32-elf-gdb -ex "file target/xtensa-esp32-none-elf/debug/rtos-thingy" -ex "target extended-remote :3333"'
+  bash:
+    extends: base
+    command: bash

@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  base:
+    build: .
+    working_dir: /code
+    environment:
+      - PYNPUT_BACKEND_KEYBOARD=dummy
+      - PYNPUT_BACKEND_MOUSE=dummy
+    volumes:
+      - .:/code
+    entrypoint: /home/docker/entrypoint.sh
+  check:
+    extends: base
+    command: poetry run pytest
+  format:
+    extends: base
+    command: sh -c '
+      poetry run black examples src tests;
+      poetry run isort -ir examples src tests;
+      poetry run autoflake -ir --remove-unused-variables examples src tests'
+  lint:
+    extends: base
+    command: poetry run mypy .
+  doc:
+    extends: base
+    command: docs/build
+  demo:
+    extends: base
+    command: poetry run python3 examples/demo.py
+  shell:
+    extends: base
+    command: bash -c '
+      export SHELL=/bin/bash;
+      poetry shell'
+  bash:
+    extends: base
+    command: bash
