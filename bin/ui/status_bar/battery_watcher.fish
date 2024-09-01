@@ -16,7 +16,7 @@ argparse -- $argv
 set flasher 0
 set critical_battery_charge 10
 set refresh_period 1
-set measures_count 30
+set measures_count 10
 
 while true
   get_acpi_info | read battery_id battery_state battery_charge estimated_time

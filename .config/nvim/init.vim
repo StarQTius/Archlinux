@@ -77,4 +77,12 @@ tmap <A-0> <ESC>:tabn 10<CR>
 nnoremap p ""p
 
 " Populate neovim path variable with directories tracked by git
-let &path = system("begin; git ls-files --others --exclude-standard; git ls-files; end | xargs dirname | sort | uniq | sed -z 's:\\n:,:g'")
+let &path = system("
+\ begin;
+\ git ls-files --others --exclude-standard;
+\   git ls-files;
+\ end |
+\ xargs dirname |
+\ sort |
+\ uniq |
+\ sed -z 's:\\n:,:g'")
