@@ -43,6 +43,7 @@ npm
 ntfs-3g
 ntp
 openssh
+openssl-1.1
 pdfjs
 pdftk
 perl-image-exiftool
@@ -51,8 +52,8 @@ playerctl
 pulseaudio
 python
 python-adblock
+python-pipx
 qt6-wayland
-qutebrowser-git
 rclone
 refind
 smartmontools
