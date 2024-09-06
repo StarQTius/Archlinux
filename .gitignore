@@ -4,6 +4,7 @@
 !.gitconfig
 !.gitignore
 !package_list
+!pipx_list.json
 
 .config/*
 !.config/
