@@ -10,7 +10,7 @@ if test (count $argv) -eq 0
 end
 
 if test $argv[1] = "run"
-    set argv $argv[1] "--rm" $argv[2..]
+    set argv $argv[1] --rm $argv[2..]
 end
 
 call_doco $argv

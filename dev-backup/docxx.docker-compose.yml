@@ -1,0 +1,10 @@
+services:
+  base:
+    build: .
+    volumes:
+      - .:/code
+    working_dir: /code
+    tty: true
+  shell:
+    extends: base
+    command: bash

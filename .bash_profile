@@ -3,6 +3,7 @@ export TERM=alacritty
 export SHELL=fish
 
 pacman -Qeq > package_list
+pipx list --json > pipx_list.json
 ls */Dockerfile */docker-compose.yml | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's:/:.:')"
 
 git add -A

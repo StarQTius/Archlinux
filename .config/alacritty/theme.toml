@@ -12,7 +12,7 @@ cursor = '#f0f3f6'
 
 # Normal colors
 [colors.normal]
-black = '#0a0c10'
+black = '#5a5c50'
 red = '#ff9492'
 green = '#26cd4d'
 yellow = '#f0b72f'
@@ -23,7 +23,7 @@ white = '#d9dee3'
 
 # Bright colors
 [colors.bright]
-black = '#0a0c10'
+black = '#5a5c50'
 red = '#ffb1af'
 green = '#4ae168'
 yellow = '#f7c843'
