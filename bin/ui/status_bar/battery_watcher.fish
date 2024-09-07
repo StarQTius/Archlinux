@@ -17,7 +17,7 @@ argparse -- $argv
 set flasher 0
 set critical_battery_charge 10
 set refresh_period 1
-set measures_count 10
+set measures_max_count 10
 
 while true
   get_acpi_info | read battery_id battery_state battery_charge estimated_time
@@ -29,8 +29,9 @@ while true
 
   set estimated_times (
     echo $estimated_time $estimated_times |
-    cut --delimiter=" " --field=1-$measures_count)
-  set median_index (math "$measures_count / 2 + 1")
+    cut --delimiter=" " --field=1-$measures_max_count)
+  set measures_count (echo $estimated_times | wc --words)
+  set median_index (math "ceil $measures_count / 2")
 
   echo $estimated_times |
   sed 's/ /\n/g' |
