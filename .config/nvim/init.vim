@@ -7,10 +7,12 @@ call plug#begin()
     Plug 'lewis6991/gitsigns.nvim', {'tag': 'v0.6'}
     Plug 'willothy/flatten.nvim', {'tag': 'v0.5.1'}
     Plug 'StarQTius/github-nvim-theme'
-    Plug 'bfrg/vim-cpp-modern'
+    Plug 'Mofiqul/vscode.nvim'
+    Plug 'StarQTius/onedark.nvim'
 call plug#end()
 
-colorscheme tokyonight
+let g:onedark_config = { 'style': 'deep' }
+colorscheme onedark
 
 lua require('gitsigns-config')
 lua require('clangd-config')

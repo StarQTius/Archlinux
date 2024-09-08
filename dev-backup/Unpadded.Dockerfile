@@ -43,7 +43,16 @@ WORKDIR /
 RUN git config --global --add safe.directory /code
 ENV CCACHE_DIR=/code/.ccache
 
+# Install Kitware Aptitude repository
+RUN apt install gpg -y
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6AF7F09730B3F0A4
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
+
+RUN apt update
 RUN apt install python3-dev -y
+RUN apt install cmake -y
+RUN apt install g++ -y
 
 RUN adduser docker
 RUN echo 'docker ALL=NOPASSWD:ALL' >> /etc/sudoers
