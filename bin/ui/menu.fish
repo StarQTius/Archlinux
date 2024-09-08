@@ -12,7 +12,7 @@ echo $PATH \
   | xargs --replace=% find % -type f -executable -follow \
   | xargs --max-lines=1 basename \
   | sort \
-  | fzf --reverse --color=bg:black \
+  | fzf --reverse --color=bg:#000000 \
   | xargs --no-run-if-empty which \
   | xargs --no-run-if-empty swaymsg exec --
 

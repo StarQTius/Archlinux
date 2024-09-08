@@ -1,14 +1,16 @@
 call plug#begin()
-    Plug 'morhetz/gruvbox'
+    Plug 'StarQTius/gruvbox'
     Plug 'nvim-neo-tree/neo-tree.nvim', {'branch': 'v2.x'}
     Plug 'MunifTanjim/nui.nvim'
     Plug 'nvim-lua/plenary.nvim', {'tag': 'v0.1.3'}
     Plug 'nvim-tree/nvim-web-devicons'
     Plug 'lewis6991/gitsigns.nvim', {'tag': 'v0.6'}
     Plug 'willothy/flatten.nvim', {'tag': 'v0.5.1'}
+    Plug 'StarQTius/github-nvim-theme'
+    Plug 'bfrg/vim-cpp-modern'
 call plug#end()
 
-colorscheme gruvbox
+colorscheme tokyonight
 
 lua require('gitsigns-config')
 lua require('clangd-config')

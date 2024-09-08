@@ -43,6 +43,8 @@ WORKDIR /
 RUN git config --global --add safe.directory /code
 ENV CCACHE_DIR=/code/.ccache
 
+RUN apt install python3-dev -y
+
 RUN adduser docker
 RUN echo 'docker ALL=NOPASSWD:ALL' >> /etc/sudoers
 USER docker
