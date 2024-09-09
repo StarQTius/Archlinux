@@ -1,17 +1,17 @@
 call plug#begin()
-    Plug 'StarQTius/gruvbox'
-    Plug 'nvim-neo-tree/neo-tree.nvim', {'branch': 'v2.x'}
     Plug 'MunifTanjim/nui.nvim'
     Plug 'nvim-lua/plenary.nvim', {'tag': 'v0.1.3'}
     Plug 'nvim-tree/nvim-web-devicons'
     Plug 'lewis6991/gitsigns.nvim', {'tag': 'v0.6'}
     Plug 'willothy/flatten.nvim', {'tag': 'v0.5.1'}
-    Plug 'StarQTius/github-nvim-theme'
-    Plug 'Mofiqul/vscode.nvim'
     Plug 'StarQTius/onedark.nvim'
 call plug#end()
 
-let g:onedark_config = { 'style': 'deep' }
+let g:onedark_config = {
+  \ 'style': 'deep',
+  \ 'transparent': 'true',
+  \ 'term_colors': 'false',
+\ }
 colorscheme onedark
 
 lua require('gitsigns-config')
@@ -23,11 +23,8 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
-" Set the background transparent
-hi Normal guibg=NONE ctermbg=NONE
-
 " Toggle the file tree and focus on it
-map <A-t> :NeoTreeFocusToggle<enter>
+map <A-t> :e .<cr>
 
 " Move around between panes
 map <A-Left> <C-w><Left>
