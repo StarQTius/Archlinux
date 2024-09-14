@@ -30,6 +30,7 @@ settings:
     https://z.imt.fr: false
   content.register_protocol_handler:
     https://mail.google.com?extsrc=mailto&url=%25s: false
+    https://outlook.office.com?mailtouri=%25s: true
     https://z.imt.fr?view=compose&to=%25s: false
   url.default_page:
     global: https://www.google.com

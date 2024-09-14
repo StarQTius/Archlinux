@@ -5,6 +5,7 @@ call plug#begin()
     Plug 'lewis6991/gitsigns.nvim', {'tag': 'v0.6'}
     Plug 'willothy/flatten.nvim', {'tag': 'v0.5.1'}
     Plug 'StarQTius/onedark.nvim'
+    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 call plug#end()
 
 let g:onedark_config = {
@@ -13,6 +14,8 @@ let g:onedark_config = {
   \ 'term_colors': 'false',
 \ }
 colorscheme onedark
+
+let g:semshi_update_delay_factor = 1 / 1000
 
 lua require('gitsigns-config')
 lua require('clangd-config')

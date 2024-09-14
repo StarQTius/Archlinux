@@ -53,6 +53,7 @@ pulseaudio
 python
 python-adblock
 python-pipx
+python-pynvim
 qt6-wayland
 rclone
 refind
