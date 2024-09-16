@@ -17,17 +17,17 @@ colorscheme onedark
 
 let g:semshi_update_delay_factor = 1 / 1000
 
-lua require('gitsigns-config')
-lua require('clangd-config')
-lua require('flatten-config')
+lua require('init')
 
 " Set tab properties
 set tabstop=2
 set shiftwidth=2
 set expandtab
 
-" Toggle the file tree and focus on it
-map <A-t> :e .<cr>
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+map <A-t> <Esc>:lua toggle_newtr()<cr>
+map <C-A-t> <Esc>:lua toggle_newtr(".")<cr>
 
 " Move around between panes
 map <A-Left> <C-w><Left>
