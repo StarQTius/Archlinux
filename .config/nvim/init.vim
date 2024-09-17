@@ -25,9 +25,8 @@ set shiftwidth=2
 set expandtab
 
 let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-map <A-t> <Esc>:lua toggle_newtr()<cr>
-map <C-A-t> <Esc>:lua toggle_newtr(".")<cr>
+map <A-t> <Esc>:lua toggle_netrw()<cr>
+map <C-A-t> <Esc>:lua toggle_netrw(".")<cr>
 
 " Move around between panes
 map <A-Left> <C-w><Left>
