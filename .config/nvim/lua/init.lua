@@ -3,9 +3,13 @@ require("clangd-config")
 require("flatten-config")
 
 function toggle_netrw(path)
-  if type(path) == "nil" and vim.bo.buftype == "" then
-    local current_file = vim.api.nvim_buf_get_name(0)
-    path = vim.fs.dirname(current_file)
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  
+  if type(path) == "nil"
+    and vim.bo.buftype == ""
+    and buf_name ~= ""
+  then
+    path = vim.fs.dirname(buf_name)
   else
     path = "."
   end
@@ -20,7 +24,10 @@ function toggle_netrw(path)
     end
   end
 
-  vim.api.nvim_open_win(0, false, { split = "right"})
+  if #tab_wins == 1 and buf_name ~= "" then
+    vim.api.nvim_open_win(0, false, { split = "right"})
+  end
+
   local win = vim.api.nvim_get_current_win()
   vim.cmd(string.format("edit %s", path))
 end
