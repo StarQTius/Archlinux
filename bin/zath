@@ -3,15 +3,27 @@
 argparse -- $argv
 
 if test (count $argv) -eq 0
-  set file (find \
-  | xargs --max-lines=1 --max-procs=(nproc) file --extension \
-  | grep "pdf\$" \
-  | sed 's/^\(.*\):\s*pdf$/\1/' \
-  | fzf)
+  # When run in too shallow a path, huge delays between each PDF file finding
+  # are expected. In such case, the user may want to terminate the pipeline by
+  # leaving FZF. This will break the pipeline starting from its end. However,
+  # "grep" will not realize that the pipeline is breaking until it tries
+  # writing to its dangling standard output, which will not happen until a PDF
+  # file is found.
+  # Therefore, we kill every stage of the pipeline once FZF is exited. Killing
+  # the beginning of the pipe works, but it is somewhat laggy since "xargs
+  # file" reacts slowly to EOF (perhaps some buffering at work). Therefore, we
+  # kill every stage of the pipeline instead (killing "xargs file" should be
+  # enough but better safe than sorry).
+  set file (sh -c "find -type f \
+  | xargs --max-lines=1 file --extension \
+  | grep 'pdf\$' \
+  | sed 's/^\(.*\):\s*pdf\$/\1/' \
+  | (fzf; pkill --parent=\$\$ '.*')")
 else if test (count $argv) -eq 1
   echo $argv | read file
 else
-  echo "Too many positional arguments (max 1)"
+  set this_script (status basename)
+  echo "Usage: $this_script [file]"
   exit 1
 end
 
@@ -25,4 +37,4 @@ if test ! (file $file | grep "PDF document")
   exit 1
 end
 
-zathura $file &disown
+zathura $file >/dev/null 2>&1 &disown
