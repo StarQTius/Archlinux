@@ -13,7 +13,7 @@ services:
   check_revamp:
     extends: base
     command: sh -c '
-      cmake -B build -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DFETCHCONTENT_FULLY_DISCONNECTED=ON -DCMAKE_CXX_FLAGS="-fconcepts-diagnostics-depth=100" &&
+      cmake -B build -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DFETCHCONTENT_FULLY_DISCONNECTED=ON -DCMAKE_CXX_FLAGS="-fconcepts-diagnostics-depth=100 -fmax-errors=10" &&
       cmake --build build -t check_revamp -j4'
   check_revamp_full:
     extends: base
