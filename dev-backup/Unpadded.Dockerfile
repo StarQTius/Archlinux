@@ -58,6 +58,12 @@ RUN apt install cmake -y
 RUN apt install g++ -y
 RUN apt install clang-19 -y
 
+RUN sudo apt install software-properties-common -y
+RUN sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+RUN sudo apt update
+RUN sudo apt install g++-13 -y
+RUN sudo apt install gcc-13 -y
+
 RUN adduser docker
 RUN echo 'docker ALL=NOPASSWD:ALL' >> /etc/sudoers
 USER docker
