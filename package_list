@@ -7,6 +7,7 @@ autotiling
 base
 base-devel
 bat
+chromium
 cronie
 debootstrap
 debugedit
@@ -36,6 +37,7 @@ linux-firmware
 linux-headers
 make
 man-db
+miraclecast-git
 neovim
 net-tools
 networkmanager
@@ -74,6 +76,7 @@ usbutils
 vim
 wev
 wl-clipboard
+xorg-xwayland
 yay
 zathura
 zathura-pdf-mupdf
