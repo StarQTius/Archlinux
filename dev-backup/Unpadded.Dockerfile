@@ -1,69 +1,50 @@
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
-# Install Kitware Aptitude repository
-RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
-RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
-
-RUN apt update
-RUN apt install sudo -y
-RUN apt install pipx -y
-RUN apt install gcc-11 -y
-RUN apt install ccache -y
-RUN apt install doxygen -y
-RUN apt install cmake -y
-RUN apt install git -y
-RUN apt install gdb -y
-RUN apt install clang-format -y
-RUN apt install clangd -y
-RUN apt install clang-tidy -y
-RUN apt install socat -y
-RUN apt install python3.11 -y
-RUN apt install python3.11-venv -y
-RUN apt install clang -y
-RUN apt install wget -y
-RUN apt install clang-15 -y
-RUN apt install libclang-15-dev -y
-RUN apt install clang-tidy-15 -y
-RUN apt install cmake -y
-
-RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-15 0
-
-RUN pipx install cmakelang
-RUN pipx install black
-RUN pipx install isort
-
-RUN git clone https://github.com/include-what-you-use/include-what-you-use
-WORKDIR /include-what-you-use
-RUN git checkout clang_15
-RUN cmake -B build -DCMAKE_PREFIX_PATH=/usr/lib/llvm-15 
-RUN cmake --build build -t install -j4
-RUN ln -s /usr/local/bin/include-what-you-use /usr/bin/iwyu
 WORKDIR /
+RUN apt update
+RUN --mount=type=cache,id=Unpadded,target=/var/cache/apt \
+  apt install -y \
+  git \
+  software-properties-common \
+  wget
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+RUN echo 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main' > /etc/apt/sources.list.d/llvm.list
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ noble main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
+RUN git clone --depth=1 --branch=clang_18 https://github.com/include-what-you-use/include-what-you-use
 
+WORKDIR /
+RUN apt update
+RUN --mount=type=cache,id=Unpadded,target=/var/cache/apt \
+	apt install -y \
+  ccache \
+  clang-18 \
+  clang-19 \
+	clangd \
+	clang-format \
+	clang-tidy \
+	cmake \
+	gdb \
+  g++-14 \
+  libclang-18-dev \
+	pipx \
+	socat \
+	sudo
 RUN git config --global --add safe.directory /code
 ENV CCACHE_DIR=/code/.ccache
 
-# Install Kitware Aptitude repository
-RUN apt install gpg -y
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6AF7F09730B3F0A4
-RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
-RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
+WORKDIR /include-what-you-use
+RUN --mount=type=cache,id=Unpadded,target=build \
+  cmake -Bbuild -DCMAKE_CXX_COMPILER=clang++-18 -DCMAKE_PREFIX_PATH=/usr/lib/llvm-18 \
+  && cmake --build build --target install --parallel $(nproc)
+RUN ln -s /usr/local/bin/include-what-you-use /usr/bin/iwyu
 
-RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-RUN echo 'deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main' > /etc/apt/sources.list.d/llvm.list
+# RUN echo 'docker ALL=NOPASSWD:ALL' >> /etc/sudoers
+USER ubuntu
+WORKDIR /home/ubuntu
+RUN pipx ensurepath
+RUN --mount=type=cache,id=Unpadded,target=/home/ubuntu/.cache/pip,uid=1000,gid=1000 \
+  pipx install cmakelang
 
-RUN apt update
-RUN apt install python3-dev -y
-RUN apt install cmake -y
-RUN apt install g++ -y
-RUN apt install clang-19 -y
-
-RUN sudo apt install software-properties-common -y
-RUN sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-RUN sudo apt update
-RUN sudo apt install g++-13 -y
-RUN sudo apt install gcc-13 -y
-
-RUN adduser docker
-RUN echo 'docker ALL=NOPASSWD:ALL' >> /etc/sudoers
-USER docker
+ENV TERM=xterm-color
