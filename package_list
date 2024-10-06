@@ -7,7 +7,6 @@ autotiling
 base
 base-devel
 bat
-chromium
 cronie
 debootstrap
 debugedit
@@ -24,7 +23,6 @@ gcc
 gdb
 git
 gnu-netcat
-google-chrome
 grub
 gtk2
 htop
@@ -38,7 +36,6 @@ linux-firmware
 linux-headers
 make
 man-db
-miraclecast-git
 neovim
 net-tools
 networkmanager
@@ -77,7 +74,6 @@ usbutils
 vim
 wev
 wl-clipboard
-xorg-xwayland
 yay
 zathura
 zathura-pdf-mupdf
