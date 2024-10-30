@@ -13,7 +13,7 @@ settings:
   colors.webpage.darkmode.contrast:
     global: 0.0
   colors.webpage.darkmode.enabled:
-    global: true
+    global: false
   content.desktop_capture:
     https://discord.com: true
   content.geolocation:
