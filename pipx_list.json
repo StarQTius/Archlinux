@@ -4,26 +4,21 @@
         "qutebrowser": {
             "metadata": {
                 "injected_packages": {
-                    "pyqt5": {
+                    "pyqt6": {
                         "app_paths": [
                             {
-                                "__Path__": "/home/paulin/.local/share/pipx/venvs/qutebrowser/bin/pylupdate5",
+                                "__Path__": "/home/paulin/.local/share/pipx/venvs/qutebrowser/bin/pylupdate6",
                                 "__type__": "Path"
                             },
                             {
-                                "__Path__": "/home/paulin/.local/share/pipx/venvs/qutebrowser/bin/pyrcc5",
-                                "__type__": "Path"
-                            },
-                            {
-                                "__Path__": "/home/paulin/.local/share/pipx/venvs/qutebrowser/bin/pyuic5",
+                                "__Path__": "/home/paulin/.local/share/pipx/venvs/qutebrowser/bin/pyuic6",
                                 "__type__": "Path"
                             }
                         ],
                         "app_paths_of_dependencies": {},
                         "apps": [
-                            "pylupdate5",
-                            "pyrcc5",
-                            "pyuic5"
+                            "pylupdate6",
+                            "pyuic6"
                         ],
                         "apps_of_dependencies": [],
                         "include_apps": false,
@@ -32,9 +27,41 @@
                         "man_pages_of_dependencies": [],
                         "man_paths": [],
                         "man_paths_of_dependencies": {},
-                        "package": "pyqt5",
-                        "package_or_url": "pyqt5",
-                        "package_version": "5.15.11",
+                        "package": "pyqt6",
+                        "package_or_url": "pyqt6",
+                        "package_version": "6.8.0",
+                        "pinned": false,
+                        "pip_args": [],
+                        "suffix": ""
+                    },
+                    "pyqt6-webengine": {
+                        "app_paths": [],
+                        "app_paths_of_dependencies": {
+                            "pyqt6": [
+                                {
+                                    "__Path__": "/home/paulin/.local/share/pipx/venvs/qutebrowser/bin/pylupdate6",
+                                    "__type__": "Path"
+                                },
+                                {
+                                    "__Path__": "/home/paulin/.local/share/pipx/venvs/qutebrowser/bin/pyuic6",
+                                    "__type__": "Path"
+                                }
+                            ]
+                        },
+                        "apps": [],
+                        "apps_of_dependencies": [
+                            "pylupdate6",
+                            "pyuic6"
+                        ],
+                        "include_apps": false,
+                        "include_dependencies": false,
+                        "man_pages": [],
+                        "man_pages_of_dependencies": [],
+                        "man_paths": [],
+                        "man_paths_of_dependencies": {},
+                        "package": "pyqt6-webengine",
+                        "package_or_url": "pyqt6-webengine",
+                        "package_version": "6.8.0",
                         "pinned": false,
                         "pip_args": [],
                         "suffix": ""
@@ -59,8 +86,8 @@
                     "man_paths": [],
                     "man_paths_of_dependencies": {},
                     "package": "qutebrowser",
-                    "package_or_url": "qutebrowser==2.5.3",
-                    "package_version": "2.5.3",
+                    "package_or_url": "qutebrowser",
+                    "package_version": "3.4.0",
                     "pinned": false,
                     "pip_args": [],
                     "suffix": ""

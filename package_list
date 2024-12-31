@@ -56,8 +56,6 @@ python
 python-adblock
 python-pipx
 python-pynvim
-qt5-wayland
-qt6-wayland
 rclone
 refind
 smartmontools
