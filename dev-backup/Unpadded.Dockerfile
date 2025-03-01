@@ -26,7 +26,7 @@ RUN --mount=type=cache,id=Unpadded,target=/var/cache/apt \
 	clang-tidy \
 	cmake \
 	gdb \
-  g++-14 \
+  g++-15 \
   libclang-18-dev \
 	pipx \
 	socat \
