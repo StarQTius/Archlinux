@@ -14,7 +14,7 @@ services:
   check_revamp:
     extends: base
     command: bash --login -c '
-      cmake -Bbuild -DCMAKE_CXX_COMPILER=g++-14 -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DFETCHCONTENT_FULLY_DISCONNECTED=ON -DCMAKE_CXX_FLAGS="-Werror -Wall -Wextra -std=c++23 -fmax-errors=10 -ftemplate-backtrace-limit=0 -ftemplate-depth=100 -fconcepts-diagnostics-depth=10"
+      cmake -Bbuild -DCMAKE_CXX_COMPILER=g++-14 -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DFETCHCONTENT_FULLY_DISCONNECTED=ON -DCMAKE_CXX_FLAGS="-Werror -Wall -Wextra -std=c++23 -fmax-errors=10 -ftemplate-backtrace-limit=0 -ftemplate-depth=100 -fconcepts-diagnostics-depth=10 -O0"
       && cmake --build build -t check_revamp -j4'
   check_revamp_clang:
     extends: base
