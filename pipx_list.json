@@ -87,7 +87,7 @@
                     "man_paths_of_dependencies": {},
                     "package": "qutebrowser",
                     "package_or_url": "qutebrowser",
-                    "package_version": "3.4.0",
+                    "package_version": "3.5.0",
                     "pinned": false,
                     "pip_args": [],
                     "suffix": ""
