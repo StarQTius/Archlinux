@@ -2,7 +2,7 @@ call plug#begin()
     Plug 'MunifTanjim/nui.nvim'
     Plug 'nvim-lua/plenary.nvim', {'tag': 'v0.1.3'}
     Plug 'nvim-tree/nvim-web-devicons'
-    Plug 'lewis6991/gitsigns.nvim', {'tag': 'v0.6'}
+    Plug 'lewis6991/gitsigns.nvim', {'tag': 'v1.0.2'}
     Plug 'willothy/flatten.nvim', {'tag': 'v0.5.1'}
     Plug 'StarQTius/onedark.nvim'
     Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -89,3 +89,7 @@ let &path = system("
 \ sort |
 \ uniq |
 \ sed -z 's:\\n:,:g'")
+
+" Move betweem hunks
+nmap M :Gitsigns nav_hunk prev<CR>
+nmap m :Gitsigns nav_hunk next<CR>
