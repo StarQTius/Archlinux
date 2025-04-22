@@ -1,0 +1,92 @@
+#!/bin/python
+
+from sys import argv, stdout, stdin
+from dataclasses import dataclass
+from itertools import groupby, zip_longest
+from functools import reduce
+from typing import Iterable, TypeVar
+from pprint import pprint
+
+T = TypeVar("T")
+
+@dataclass
+class TextGroup:
+    level: int
+    texts: list[str]
+    nested: list["TextGroup"]
+
+def main():
+    for line in stdin:
+        try:
+            tree = build_text_group_tree(line)
+            expunge(tree)
+        except LineParsingError:
+            stdout.write(line)
+
+class LineParsingError(ValueError):
+    pass
+
+def expunge(tree: TextGroup):
+    workpile = [("", tree)]
+    is_error_line = False
+    while len(workpile) > 0:
+        txt, txtgrp = workpile.pop()
+
+        if "error:" in txt:
+            is_error_line = True
+
+        stdout.write(txt)
+        if txtgrp is None:
+            continue
+        
+        if txtgrp.level > 0 and not is_error_line:
+            workpile.append(("...>", None))
+            continue
+
+        zipped_txt_and_group = list(zip_longest(txtgrp.texts, txtgrp.nested))
+        zipped_txt_and_group.reverse()
+        workpile.extend(zipped_txt_and_group)
+
+def build_text_group_tree(line: str) -> TextGroup:
+    def f(acc, c):
+        last = acc[-1]
+        if c == '<':
+            return acc + [last + 1]
+        if c == '>':
+            return acc + [last - 1]
+        return acc + [last]
+
+    level_by_position = reduce(f, line, [0])
+    levels_and_chunk_size = map(
+        lambda lvl_and_group: (lvl_and_group[0], itlen(lvl_and_group[1])),
+        groupby(level_by_position)
+    )
+    
+    i = 0
+    retval = []
+    for (lvl, sz) in levels_and_chunk_size:
+        if lvl == len(retval):
+            retval.append(TextGroup(level=lvl, texts=[], nested=[]))
+        elif lvl >= 0 and lvl == len(retval) - 2:
+            last = retval.pop()
+            retval[-1].nested.append(last)
+        else:
+            raise LineParsingError(f"Unmatched closing bracket")
+        
+        retval[-1].texts.append(line[i:i+sz])
+        i += sz
+
+    if len(retval) != 1:
+        raise LineParsingError(f"Unmatched opening bracket (at level {len(retval) - 1})")
+
+    return retval[0]
+
+def itlen(it: Iterable[T]) -> int:
+    retval = 0
+    for _ in it:
+        retval += 1
+
+    return retval
+
+if __name__ == "__main__":
+    main()
