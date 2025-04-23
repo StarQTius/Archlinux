@@ -6,6 +6,7 @@ from itertools import groupby, zip_longest
 from functools import reduce
 from typing import Iterable, TypeVar
 from pprint import pprint
+import re
 
 T = TypeVar("T")
 
@@ -29,17 +30,20 @@ class LineParsingError(ValueError):
 def expunge(tree: TextGroup):
     workpile = [("", tree)]
     is_error_line = False
+    is_code_line = False
     while len(workpile) > 0:
         txt, txtgrp = workpile.pop()
 
         if "error:" in txt:
             is_error_line = True
+        if re.compile("[0-9]+ |").match(txt):
+            is_code_line = True
 
         stdout.write(txt)
         if txtgrp is None:
             continue
         
-        if txtgrp.level > 0 and not is_error_line:
+        if txtgrp.level > 0 and not is_error_line and not is_code_line:
             workpile.append(("...>", None))
             continue
 
