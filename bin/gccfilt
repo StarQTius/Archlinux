@@ -36,8 +36,14 @@ def expunge(tree: TextGroup):
 
         if "error:" in txt:
             is_error_line = True
-        if re.compile("[0-9]+ |").match(txt):
+        if re.compile("[0-9]+ \\|").search(txt):
             is_code_line = True
+        if re.compile("      \\|").search(txt):
+            is_code_line = True
+
+        if is_error_line and is_code_line:
+            print(txt)
+            txt = re.compile("(\\s+|\\s*[0-9]+\\s*)\\|").search(txt).group(0)
 
         stdout.write(txt)
         if txtgrp is None:
