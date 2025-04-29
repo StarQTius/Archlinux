@@ -29,29 +29,40 @@ class LineParsingError(ValueError):
 
 def expunge(tree: TextGroup):
     workpile = [("", tree)]
+    is_error_line = False
+    is_note_line = False
+    is_code_line = False
+    
     while len(workpile) > 0:
         txt, txtgrp = workpile.pop()
+        is_error_token = False
+        is_note_token = False
         
-        is_error_line = False
-        is_note_line = False
-        is_code_line = False
         if "error:" in txt:
             is_error_line = True
+            is_error_token = True
         if "note:" in txt:
             is_note_line = True
+            is_note_token = True
         if re.compile("[0-9]+ \\|").search(txt):
             is_code_line = True
         if re.compile("      \\|").search(txt):
             is_code_line = True
 
-        if (is_error_line or is_note_line) and is_code_line:
+        if (is_error_token or is_note_token) and is_code_line:
             txt = "   " + re.compile("\\s+((|[0-9]+\\s*)\\| .*)").search(txt).group(0)
 
         stdout.write(txt)
+        
+        if "\n" in txt:
+            is_error_line = False
+            is_note_line = False
+            is_code_line = False
+
         if txtgrp is None:
             continue
         
-        if txtgrp.level > 0 and not is_error_line and not is_code_line:
+        if txtgrp.level > 0 and not (is_error_line or is_note_line or is_code_line):
             workpile.append(("...>", None))
             continue
 
