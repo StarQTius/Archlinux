@@ -93,3 +93,7 @@ let &path = system("
 " Move betweem hunks
 nmap M :Gitsigns nav_hunk prev<CR>
 nmap m :Gitsigns nav_hunk next<CR>
+
+" Move at start / end of the line
+nmap [ ^
+nmap ] $
