@@ -8,6 +8,7 @@ base
 base-devel
 bat
 bitwarden-cli
+chromium
 cronie
 debootstrap
 debugedit
@@ -16,6 +17,7 @@ docker
 docker-buildx
 docker-compose
 downgrade
+ente-auth-bin
 fakeroot
 firefox
 fish
