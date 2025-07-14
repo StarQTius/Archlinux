@@ -1,5 +1,6 @@
 #!/bin/python
 
+from argparse import ArgumentParser
 from sys import argv, stdout, stdin
 from dataclasses import dataclass
 from itertools import groupby, zip_longest
@@ -11,23 +12,27 @@ import re
 T = TypeVar("T")
 
 @dataclass
+class UserArguments:
+    level: int
+
+@dataclass
 class TextGroup:
     level: int
     texts: list[str]
     nested: list["TextGroup"]
 
-def main():
+def main(user_args: UserArguments):
     for line in stdin:
         try:
             tree = build_text_group_tree(line)
-            expunge(tree)
+            expunge(tree, user_args)
         except LineParsingError:
             stdout.write(line)
 
 class LineParsingError(ValueError):
     pass
 
-def expunge(tree: TextGroup):
+def expunge(tree: TextGroup, user_args: UserArguments):
     workpile = [("", tree)]
     is_error_line = False
     is_note_line = False
@@ -62,7 +67,7 @@ def expunge(tree: TextGroup):
         if txtgrp is None:
             continue
         
-        if txtgrp.level > 0 and not (is_error_line or is_note_line or is_code_line):
+        if txtgrp.level > user_args.level and not (is_error_line or is_note_line or is_code_line):
             workpile.append(("...>", None))
             continue
 
@@ -112,4 +117,9 @@ def itlen(it: Iterable[T]) -> int:
     return retval
 
 if __name__ == "__main__":
-    main()
+    parser = ArgumentParser(prog="gccfilt")
+    parser.add_argument("-l", "--level", type=int, nargs="?", default=0, help="How deep compiler diagnostic is inspected")
+
+    user_args = UserArguments(**vars(parser.parse_args()))
+    print(parser.parse_args())
+    main(user_args)
