@@ -1,4 +1,4 @@
-FROM ubuntu:noble
+FROM ubuntu:plucky
 
 WORKDIR /
 RUN apt update
@@ -8,7 +8,7 @@ RUN --mount=type=cache,id=Unpadded,target=/var/cache/apt \
   software-properties-common \
   wget
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
-RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | gpg --dearmor | sudo tee /usr/share/keyrings/llvm-archive-keyring.gpg
 RUN echo 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main' > /etc/apt/sources.list.d/llvm.list
 RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
 RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ noble main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
@@ -17,20 +17,20 @@ RUN git clone --depth=1 --branch=clang_18 https://github.com/include-what-you-us
 WORKDIR /
 RUN apt update
 RUN --mount=type=cache,id=Unpadded,target=/var/cache/apt \
-	apt install -y \
+  apt install -y \
   ccache \
   clang-18 \
   clang-19 \
-	clangd \
-	clang-format \
-	clang-tidy \
-	cmake \
-	gdb \
+  clangd \
+  clang-format \
+  clang-tidy \
+  cmake \
+  gdb \
   g++-15 \
   libclang-18-dev \
-	pipx \
-	socat \
-	sudo
+  pipx \
+  socat \
+  sudo
 RUN git config --global --add safe.directory /code
 ENV CCACHE_DIR=/code/.ccache
 
