@@ -17,9 +17,9 @@ services:
       cmake --build build -t iwyu -j8'
   format:
     extends: base
-    command: sh -c '
+    command: bash --login -c '
       clang-format -i $(git ls-files | grep -E "\.(hpp|cpp)$");
-      pipx run cmake-format -i $(git ls-files | grep -E "(CMakeLists.txt|\.cmake)$");'
+      cmake-format -i $(git ls-files | grep -E "(CMakeLists.txt|\.cmake)$");'
   clangd:
     extends: base
     ports:
