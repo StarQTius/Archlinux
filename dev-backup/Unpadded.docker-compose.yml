@@ -5,11 +5,14 @@ services:
       - .:/code
     working_dir: /code
     tty: true
+  init:
+    extends: base
+    command: bash --login -c '
+      cmake -B build -DCMAKE_CXX_COMPILER=g++-15 -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-Werror -Wall -Wextra -fmax-errors=20 -ftemplate-backtrace-limit=0 -ftemplate-depth=100 -fconcepts-diagnostics-depth=10 -O0"'
   check:
     extends: base
     command: bash --login -c '
-      cmake -B build -DCMAKE_CXX_COMPILER=g++-15 -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-Werror -Wall -Wextra -std=c++23 -fmax-errors=20 -ftemplate-backtrace-limit=0 -ftemplate-depth=100 -fconcepts-diagnostics-depth=10 -O0"
-      && cmake --build build -t check -j8'
+      cmake -B build && cmake --build build -t check -j8'
   iwyu:
     extends: base
     command: bash --login -c '

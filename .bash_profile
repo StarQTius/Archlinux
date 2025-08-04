@@ -4,7 +4,7 @@ export SHELL=fish
 
 pacman -Qeq > package_list
 pipx list --json > pipx_list.json
-ls */Dockerfile */docker-compose.yml | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's:/:.:')"
+ls */Dockerfile */docker-compose.yml */CMakeUserPresets.json | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's:/:.:')"
 
 git add -A
 git commit -m"Automatic backup"

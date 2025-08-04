@@ -1,0 +1,44 @@
+{
+  "version": 10,
+  "configurePresets": [
+    {
+      "name": "default",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "g++-15",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_CXX_FLAGS": "-Werror -Wall -Wextra -O0 -fmax-errors=20 -ftemplate-backtrace-limit=0 -ftemplate-depth=100 -fconcepts-diagnostics-depth=10"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "check_full",
+      "configurePreset": "default",
+      "jobs": 8
+    },
+    {
+      "name": "install",
+      "configurePreset": "default",
+      "jobs": 8
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "check_full",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "default"
+        },
+        {
+          "type": "build",
+          "name": "check_full"
+        }
+      ]
+    }
+  ]
+}
