@@ -80,7 +80,7 @@ map <C-Right> <NOP>
 tmap <Esc> <C-\><C-n>
 
 " Truly clear the terminal
-tmap <c-l> <C-\><C-n>:set scrollback=1 \| sleep 100m \| set scrollback=10000<cr>iclear<cr>
+tmap <c-l> <C-u><C-\><C-n>:set scrollback=1 \| sleep 100m \| set scrollback=10000<cr>iclear<cr>
 
 " Allow to change tab using function keys with NVO modes
 map <A-1> :tabn 1<CR>
