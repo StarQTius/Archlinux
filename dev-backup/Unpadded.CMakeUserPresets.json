@@ -2,7 +2,7 @@
   "version": 10,
   "configurePresets": [
     {
-      "name": "default",
+      "name": "gcc",
       "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
@@ -12,27 +12,77 @@
         "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
         "CMAKE_CXX_FLAGS": "-Werror -Wall -Wextra -O0 -fmax-errors=20 -ftemplate-backtrace-limit=0 -ftemplate-depth=100 -fconcepts-diagnostics-depth=10"
       }
+    },
+    {
+      "name": "clang",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build_clang",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++-20",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_CXX_FLAGS": "-Werror -Wall -Wextra -O0"
+      }
     }
   ],
   "buildPresets": [
     {
-      "name": "check_full",
-      "configurePreset": "default",
+      "name": "check",
+      "configurePreset": "gcc",
       "jobs": 8,
-      "targets": "check_full"
+      "targets": "check"
+    },
+    {
+      "name": "check_clang",
+      "configurePreset": "clang",
+      "jobs": 8,
+      "targets": "check"
+    },
+    {
+      "name": "iwyu",
+      "configurePreset": "clang",
+      "jobs": 8,
+      "targets": "iwyu"
     }
   ],
   "workflowPresets": [
     {
-      "name": "check_full",
+      "name": "check",
       "steps": [
         {
           "type": "configure",
-          "name": "default"
+          "name": "gcc"
         },
         {
           "type": "build",
-          "name": "check_full"
+          "name": "check"
+        }
+      ]
+    },
+    {
+      "name": "check_clang",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "clang"
+        },
+        {
+          "type": "build",
+          "name": "check_clang"
+        }
+      ]
+    },
+    {
+      "name": "iwyu",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "clang"
+        },
+        {
+          "type": "build",
+          "name": "iwyu"
         }
       ]
     }
