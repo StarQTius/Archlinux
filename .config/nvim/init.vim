@@ -8,25 +8,56 @@ call plug#begin()
     Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 call plug#end()
 
-let g:onedark_config = {
-  \ 'style': 'deep',
-  \ 'transparent': 'true',
-  \ 'term_colors': 'false',
-\ }
-colorscheme onedark
+let s:make_background_transparent = get(g:, "make_background_transparent", "v:true")
 
-let g:semshi_update_delay_factor = 1 / 1000
+let g:onedark_config = {
+  \ 'style': 'cool',
+  \ 'transparent': s:make_background_transparent,
+  \ 'term_colors': v:false,
+\ }
 
 lua require('init')
+
+colorscheme onedark
 
 " Set tab properties
 set tabstop=2
 set shiftwidth=2
 set expandtab
 
+set splitright
+set jumpoptions=stack
+
 let g:netrw_banner = 0
-map <A-t> <Esc>:lua toggle_netrw()<cr>
-map <C-A-t> <Esc>:lua toggle_netrw(".")<cr>
+
+command -nargs=? -complete=file Browse lua browse(<f-args>)
+cnoreabbrev bw Browse
+
+command -nargs=? -complete=file BrowseSplit vsplit | Browse <args>
+cnoreabbrev bs BrowseSplit
+
+command -nargs=? Quickfind lua quickfind(<f-args>)
+cnoreabbrev qf Quickfind
+
+command -nargs=? QuickfindSplit vsplit | Quickfind <args>
+cnoreabbrev qs QuickfindSplit
+
+command -nargs=? Deepfind lua deepfind(<f-args>)
+cnoreabbrev df Deepfind
+
+command -nargs=? DeepfindSplit vsplit | Deepfind <args>
+cnoreabbrev ds DeepfindSplit
+
+command -nargs=? -complete=file Shell lua shell(<f-args>)
+cnoreabbrev sh Shell
+
+command -nargs=? -complete=file ShellSplit vsplit | Shell <args>
+cnoreabbrev ss ShellSplit
+
+cnoreabbrev gs Gitsigns
+
+command -nargs=? -complete=file Bclear vsplit | bufdo if stridx(expand("%"), <q-args>) == 0 | bdelete | vsplit | endif | quit
+cnoreabbrev bc Bclear
 
 " Move around between panes
 map <A-Left> <C-w><Left>
@@ -34,11 +65,18 @@ map <A-Right> <C-w><Right>
 map <A-Up> <C-w><Up>
 map <A-Down> <C-w><Down>
 
-" Exit TERMINAL with ESC
-tnoremap <Esc> <C-\><C-n>
+" Move faster vertically
+nnoremap <C-Up> 5<Up>
+nnoremap <C-Down> 5<Down>
+
+" I want to try web movements
+map <C-Left> <NOP>
+map <C-Right> <NOP>
+
+tmap <Esc> <C-\><C-n>
 
 " Truly clear the terminal
-tmap <c-l> <Esc>:set scrollback=1 \| sleep 1m \| set scrollback=10000<cr>iclear<cr>
+tmap <c-l> <C-\><C-n>:set scrollback=1 \| sleep 100m \| set scrollback=10000<cr>iclear<cr>
 
 " Allow to change tab using function keys with NVO modes
 map <A-1> :tabn 1<CR>
@@ -76,24 +114,25 @@ tmap <A-8> <ESC>:tabn 8<CR>
 tmap <A-9> <ESC>:tabn 9<CR>
 tmap <A-0> <ESC>:tabn 10<CR>
 
+" Move betweem hunks
+nmap <C-u> :Gitsigns prev_hunk<CR>
+nmap <C-d> :Gitsigns next_hunk<CR>
+
 " Do not substitute register content with replaced text when pasting
 nnoremap p ""p
 
-" Populate neovim path variable with directories tracked by git
-let &path = system("
-\ begin;
-\ git ls-files --others --exclude-standard;
-\   git ls-files;
-\ end |
-\ xargs dirname |
-\ sort |
-\ uniq |
-\ sed -z 's:\\n:,:g'")
+" Jump to a subject
+nnoremap <CR> <C-]>
 
-" Move betweem hunks
-nmap M :Gitsigns nav_hunk prev<CR>
-nmap m :Gitsigns nav_hunk next<CR>
+" Jump back
+nnoremap <BS> <C-o>
 
-" Move at start / end of the line
-nmap [ ^
-nmap ] $
+" Color .map file as LUA source
+autocmd BufRead,BufNewFile *.map set filetype=lua
+
+" Hide status lines
+set laststatus=0
+hi! link StatusLine Normal
+hi! link StatusLineNC Normal
+set statusline=%{repeat('─',winwidth('.'))}
+

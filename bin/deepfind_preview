@@ -1,0 +1,22 @@
+#!/bin/fish
+
+switch (count $argv)
+  case 2
+    set filepath $argv[1]
+    set line_number $argv[2]
+  case '*'
+    echo "Usage: $(basename (status -f)) FILEPATH LINE_NUMBER" >&2
+    exit 1
+end
+
+if test -n "$line_number"
+  bat \
+    --color=always \
+    --highlight-line="$line_number" \
+    "$filepath"
+else
+  batcat \
+    --color=always \
+    "$filepath"
+end
+

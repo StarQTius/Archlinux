@@ -1,0 +1,56 @@
+#!/bin/fish
+
+if ! argparse 'p/path=' 'f/file-only' -- $argv
+  exit $status
+end
+
+switch (count $argv)
+  case 0
+    echo "Error: Missing pattern" >&2
+    exit 1
+  case '*'
+    set pattern $argv
+end
+
+if set --local --query _flag_path
+  set path $_flag_path
+else
+  set path $PWD
+end
+
+if set --local --query _flag_file_only
+  set will_only_search_file true
+else
+  set will_only_search_file false
+end
+
+if ! test -d $path
+  echo "Error: '$path' is not a valid path" >&2
+  exit 1
+end
+
+# Second pipe component adds a space at the end of each line to prevent any
+# trailing \ to escape the single quote added by FZF in preview command.
+set user_choice (sh -c "
+  cd $path &&
+  (! $will_only_search_file && grep --ignore-case --recursive --line-number --extended-regexp '$pattern' 2>/dev/null & (find -iregex '.*$pattern.*') 2>/dev/null) \
+  | sed 's/\$/ /' \
+  | (fzf --delimiter=: --with-nth=1,3.. --query='$pattern' --preview=\"deepfind_preview {1} {2}\" --preview-window='up,+{2}-7,~3'; pkill --parent=\$\$ '.*')
+")
+
+echo $user_choice \
+| tr : ' ' \
+| read filename linenumber remainders
+
+if test -z $filename
+  exit 255
+end
+
+set filename (cd $path; realpath $filename)
+
+if test -z $linenumber
+  set linenumber 0
+end
+
+echo "$filename"@"$linenumber"
+
