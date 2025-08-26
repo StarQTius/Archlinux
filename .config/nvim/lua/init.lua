@@ -1,6 +1,9 @@
 require("gitsigns-config")
 require("clangd-config")
 require("flatten-config")
+require("oil-config")
+
+local oil = require("oil")
 
 local function run_shell_command(cmd)
   local output = {}
@@ -37,6 +40,10 @@ local function get_buffer_directory(buf)
 
   if filetype == "netrw" then
     return vim.api.nvim_buf_get_var(buf, "netrw_curdir")
+  end
+
+  if filetype == "oil" then
+    return oil.get_current_dir(buf)
   end
 
   if buftype == "" and bufname ~= "" then

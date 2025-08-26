@@ -6,6 +6,7 @@ call plug#begin()
     Plug 'willothy/flatten.nvim', {'tag': 'v0.5.1'}
     Plug 'StarQTius/onedark.nvim'
     Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+    Plug 'stevearc/oil.nvim', {'tag': 'v2.15.0'}
 call plug#end()
 
 let s:make_background_transparent = get(g:, "make_background_transparent", "v:true")

@@ -19,8 +19,8 @@ RUN --mount=type=cache,id=Unpadded,target=/var/cache/apt \
   ccache \
   clang-21 \
   clangd \
-  clang-format \
-  clang-tidy \
+  clang-format-21 \
+  clang-tidy-21 \
   cmake \
   gdb \
   g++-15 \
@@ -39,6 +39,9 @@ RUN --mount=type=cache,id=Unpadded,target=build \
   cmake -Bbuild -DCMAKE_CXX_COMPILER=clang++-21 -DCMAKE_PREFIX_PATH=/usr/lib/llvm-21 \
   && cmake --build build --target install --parallel $(nproc)
 RUN ln -s /usr/local/bin/include-what-you-use /usr/bin/iwyu
+
+RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-21 0
+RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-21 0
 
 USER ubuntu
 WORKDIR /home/ubuntu
