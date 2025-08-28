@@ -10,4 +10,6 @@ git add -A
 git commit -m"Automatic backup"
 git push
 
+fish /home/paulin/timekeeper &disown
+
 sway

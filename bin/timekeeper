@@ -1,0 +1,10 @@
+#!/bin/fish
+
+while true
+  sleep 60
+  if test 6 -le (date +'%k') -a (date +'%k') -le 23
+    logger "Timekeeper: allowing use"
+  else
+    poweroff
+  end
+end
