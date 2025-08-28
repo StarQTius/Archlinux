@@ -132,8 +132,12 @@ nnoremap <BS> <C-o>
 autocmd BufRead,BufNewFile *.map set filetype=lua
 
 " Hide status lines
-set laststatus=0
-hi! link StatusLine Normal
-hi! link StatusLineNC Normal
-set statusline=%{repeat('─',winwidth('.'))}
+hi StatusLine guibg=NONE
+hi StatusLineNC guibg=NONE
+hi StatusLineTerm guibg=NONE
+hi StatusLineTermNC guibg=NONE
 
+" Make tabline more discreet
+hi TabLine guibg=NONE guifg=#546178
+hi TabLineFill guibg=NONE
+hi TabLineSel guifg=#a5b0c5 guibg=NONE
