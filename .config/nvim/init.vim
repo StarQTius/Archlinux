@@ -141,3 +141,6 @@ hi StatusLineTermNC guibg=NONE
 hi TabLine guibg=NONE guifg=#546178
 hi TabLineFill guibg=NONE
 hi TabLineSel guifg=#a5b0c5 guibg=NONE
+
+" Don't jump when starring words
+noremap * *N
