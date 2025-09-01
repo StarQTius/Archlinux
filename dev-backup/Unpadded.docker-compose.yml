@@ -5,24 +5,22 @@ services:
       - .:/code
     working_dir: /code
     tty: true
-  init:
-    extends: base
-    command: bash --login -c '
-      cmake -B build -DCMAKE_CXX_COMPILER=g++-15 -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-Werror -Wall -Wextra -fmax-errors=20 -ftemplate-backtrace-limit=0 -ftemplate-depth=100 -fconcepts-diagnostics-depth=10 -O0"'
   check:
     extends: base
     command: bash --login -c '
-      cmake -B build && cmake --build build -t check -j8'
+      cmake --preset gcc && cmake --build build -t check -j8'
+  check_full:
+    extends: base
+    command: bash --login -c '
+      cmake --preset gcc && cmake --build build -t check_full -j8'
   iwyu:
     extends: base
     command: bash --login -c '
-      cmake -B build &&
-      cmake --build build -t iwyu -j8'
-  format:
+      cmake --preset gcc && cmake --build build -t iwyu -j8'
+  fixme:
     extends: base
     command: bash --login -c '
-      clang-format -i $(git ls-files | grep -E "\.(hpp|cpp)$");
-      cmake-format -i $(git ls-files | grep -E "(CMakeLists.txt|\.cmake)$");'
+      cmake -P cmake/fixme.cmake'
   clangd:
     extends: base
     ports:
