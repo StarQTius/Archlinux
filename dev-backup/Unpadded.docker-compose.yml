@@ -8,15 +8,15 @@ services:
   check:
     extends: base
     command: bash --login -c '
-      cmake --preset gcc && cmake --build build -t check -j8'
+      cmake --preset clang && cmake --build build_clang -t check -j8'
   check_full:
     extends: base
     command: bash --login -c '
-      cmake --preset gcc && cmake --build build -t check_full -j8'
+      cmake --preset clang && cmake --build build_clang -t check_full -j8'
   iwyu:
     extends: base
     command: bash --login -c '
-      cmake --preset gcc && cmake --build build -t iwyu -j8'
+      cmake --preset clang && cmake --build build_clang -t iwyu -j8'
   fixme:
     extends: base
     command: bash --login -c '
