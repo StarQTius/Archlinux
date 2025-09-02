@@ -16,7 +16,7 @@ services:
   iwyu:
     extends: base
     command: bash --login -c '
-      cmake --preset clang && cmake --build build_clang -t iwyu -j8'
+      cmake --preset clang && cmake --build build_clang -t iwyu -j1'
   fixme:
     extends: base
     command: bash --login -c '
