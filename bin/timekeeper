@@ -2,7 +2,7 @@
 
 while true
   sleep 60
-  if test 6 -le (date +'%k') -a (date +'%k') -lt 23
+  if test 6 -le (date +'%k') -a (date +'%k') -lt 22
     logger "Timekeeper: allowing use"
   else
     poweroff
