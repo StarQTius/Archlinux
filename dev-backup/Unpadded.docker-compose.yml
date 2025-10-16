@@ -17,6 +17,10 @@ services:
     extends: base
     command: bash --login -c '
       cmake --preset user && cmake --build build_clang -t iwyu -j1'
+  quick_iwyu:
+    extends: base
+    command: bash --login -c '
+      cmake --preset user && cmake --build build_clang -t quick_iwyu -j1'
   fixme:
     extends: base
     command: bash --login -c '
