@@ -49,6 +49,15 @@ RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/cl
 RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-21 0
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+WORKDIR /
+RUN git clone https://github.com/google/bloaty -b v1.1 --depth=1
+
+WORKDIR /bloaty
+RUN --mount=type=cache,id=Unpadded,target=bloaty_build \
+  cmake -Bbuild -DBUILD_TESTING=NO \
+  && cmake --build build --target install --parallel $(nproc)
+RUN ln -s /usr/local/bin/bloaty /usr/bin/bloaty
+
 USER ubuntu
 WORKDIR /home/ubuntu
 RUN pipx ensurepath
