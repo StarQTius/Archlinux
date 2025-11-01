@@ -13,6 +13,7 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key 2>/dev/null | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
 RUN echo 'deb http://apt.llvm.org/plucky/ llvm-toolchain-plucky-21 main' > /etc/apt/sources.list.d/llvm.list
 RUN git clone https://github.com/include-what-you-use/include-what-you-use
+RUN git clone https://github.com/google/bloaty
 
 WORKDIR /
 RUN apt update
@@ -37,10 +38,19 @@ WORKDIR /include-what-you-use
 RUN git fetch --all
 RUN git show 721024b
 RUN git checkout 721024b
-RUN --mount=type=cache,id=Unpadded,target=build \
+RUN --mount=type=cache,id=Unpadded_iwyu,target=/include-what-you-use/build \
   cmake -Bbuild -DCMAKE_CXX_COMPILER=clang++-21 -DCMAKE_PREFIX_PATH=/usr/lib/llvm-21 \
   && cmake --build build --target install --parallel $(nproc)
 RUN ln -s /usr/local/bin/include-what-you-use /usr/bin/iwyu
+
+WORKDIR /bloaty
+RUN git checkout 0e5a909
+RUN git submodule update --init --recursive
+RUN --mount=type=cache,id=Unpadded_bloaty,target=/bloaty/build \
+  cmake -Bbuild -DCMAKE_CXX_COMPILER=clang++-21 -DBUILD_TESTING=NO \
+  && make install --directory build --jobs $(nproc) --ignore-errors \
+  && cmake --build build --target install
+RUN ln -s /usr/local/bin/bloaty /usr/bin/bloaty
 
 WORKDIR /
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-15 0
@@ -48,15 +58,6 @@ RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-21 0
 RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-21 0
 RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-21 0
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-WORKDIR /
-RUN git clone https://github.com/google/bloaty -b v1.1 --depth=1
-
-WORKDIR /bloaty
-RUN --mount=type=cache,id=Unpadded,target=bloaty_build \
-  cmake -Bbuild -DBUILD_TESTING=NO \
-  && cmake --build build --target install --parallel $(nproc)
-RUN ln -s /usr/local/bin/bloaty /usr/bin/bloaty
 
 USER ubuntu
 WORKDIR /home/ubuntu
