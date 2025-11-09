@@ -6,6 +6,7 @@ android-tools
 autotiling
 base
 base-devel
+bass-fish
 bat
 chromium
 cronie
@@ -16,7 +17,6 @@ docker
 docker-buildx
 docker-compose
 downgrade
-ente-cli
 fakeroot
 firefox
 fish
