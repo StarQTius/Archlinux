@@ -12,4 +12,6 @@ git push
 
 fish /home/paulin/bin/timekeeper &disown
 
+dbus-update-activation-environment --all
+
 sway
