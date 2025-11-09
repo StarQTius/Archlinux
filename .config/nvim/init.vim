@@ -7,6 +7,7 @@ call plug#begin()
     Plug 'StarQTius/onedark.nvim'
     Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     Plug 'stevearc/oil.nvim', {'tag': 'v2.15.0'}
+    Plug 'CopilotC-Nvim/CopilotChat.nvim', {'tag': 'v4.7.4'}
 call plug#end()
 
 let s:make_background_transparent = get(g:, "make_background_transparent", "v:true")

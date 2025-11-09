@@ -16,7 +16,7 @@ docker
 docker-buildx
 docker-compose
 downgrade
-ente-auth-bin
+ente-cli
 fakeroot
 firefox
 fish
@@ -60,6 +60,7 @@ python-pipx
 python-pynvim
 rclone
 refind
+seahorse
 smartmontools
 starship
 sudo
