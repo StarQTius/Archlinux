@@ -10,6 +10,7 @@ bass-fish
 bat
 chromium
 cronie
+cursor-cli
 debootstrap
 debugedit
 dkms
@@ -20,6 +21,7 @@ downgrade
 fakeroot
 firefox
 fish
+fish-nvm
 foot
 gcc
 gdb
@@ -42,6 +44,7 @@ neovim
 net-tools
 networkmanager
 nftables
+nodejs
 npm
 ntfs-3g
 ntp

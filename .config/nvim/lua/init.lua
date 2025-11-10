@@ -2,6 +2,7 @@ require("gitsigns-config")
 require("clangd-config")
 require("flatten-config")
 require("oil-config")
+require("cyberdream-config")
 
 local oil = require("oil")
 
