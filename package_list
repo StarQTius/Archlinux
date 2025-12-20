@@ -1,3 +1,4 @@
+abiword
 acpi
 acpilight
 alacritty
@@ -73,6 +74,7 @@ swayidle
 swww
 terminus-font
 termshark
+tesseract-data-fra
 tmux
 ttf-gohu-nerd
 ttf-jetbrains-mono
@@ -82,6 +84,7 @@ usbutils
 vim
 wev
 wl-clipboard
-yay
+yay-bin
+yay-bin-debug
 zathura
 zathura-pdf-mupdf
