@@ -131,6 +131,9 @@ nnoremap <CR> <C-]>
 " Jump back
 nnoremap <BS> <C-o>
 
+" Jump forth
+nnoremap <C-BS> <C-i>
+
 " Color .map file as LUA source
 autocmd BufRead,BufNewFile *.map set filetype=lua
 
