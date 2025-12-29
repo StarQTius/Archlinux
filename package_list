@@ -18,6 +18,7 @@ dkms
 docker
 docker-buildx
 docker-compose
+docx2txt
 downgrade
 fakeroot
 firefox
