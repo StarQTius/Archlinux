@@ -1,4 +1,3 @@
-abiword
 acpi
 acpilight
 alacritty
@@ -54,10 +53,6 @@ ntp
 nvme-cli
 openssh
 openssl-1.1
-pandoc-cli
-pdfjs
-pdftk
-perl-image-exiftool
 physlock
 playerctl
 pulseaudio
@@ -76,7 +71,6 @@ swayidle
 swww
 terminus-font
 termshark
-tesseract-data-fra
 tmux
 ttf-gohu-nerd
 ttf-jetbrains-mono
@@ -89,4 +83,3 @@ wl-clipboard
 yay-bin
 yay-bin-debug
 zathura
-zathura-pdf-mupdf
