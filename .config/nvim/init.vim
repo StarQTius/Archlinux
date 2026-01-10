@@ -5,7 +5,7 @@ call plug#begin()
     Plug 'lewis6991/gitsigns.nvim', {'tag': 'v1.0.2'}
     Plug 'willothy/flatten.nvim', {'tag': 'v0.5.1'}
     Plug 'StarQTius/onedark.nvim'
-    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+    " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     Plug 'stevearc/oil.nvim', {'tag': 'v2.15.0'}
     Plug 'CopilotC-Nvim/CopilotChat.nvim', {'tag': 'v4.7.4'}
     Plug 'scottmckendry/cyberdream.nvim'
