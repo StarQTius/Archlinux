@@ -26,11 +26,13 @@ fish-nvm
 foot
 gcc
 gdb
+ghostscript
 git
 gnu-netcat
 grub
 gtk2
 htop
+imagemagick
 inetutils
 intel-media-driver
 libbsd
