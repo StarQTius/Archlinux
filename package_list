@@ -61,7 +61,6 @@ openssl-1.1
 physlock
 pipewire
 pipewire-alsa
-pipewire-pulse
 playerctl
 python
 python-adblock
