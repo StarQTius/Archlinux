@@ -8,7 +8,6 @@ base
 base-devel
 bass-fish
 bat
-bluealsa
 bluetui
 bluez
 bluez-libs
@@ -62,9 +61,8 @@ openssl-1.1
 physlock
 pipewire
 pipewire-alsa
+pipewire-pulse
 playerctl
-pulseaudio
-pulseaudio-bluetooth
 python
 python-adblock
 python-pipx
