@@ -60,6 +60,7 @@ nvme-cli
 openssh
 openssl-1.1
 physlock
+pipewire
 playerctl
 pulseaudio
 pulseaudio-bluetooth
@@ -86,6 +87,7 @@ usb_modeswitch
 usbutils
 vim
 wev
+wiremix
 wl-clipboard
 yay-bin
 yay-bin-debug
