@@ -8,6 +8,11 @@ base
 base-devel
 bass-fish
 bat
+bluetui
+bluez
+bluez-alsa-git
+bluez-libs
+bluez-utils
 chromium
 cronie
 cursor-cli
@@ -57,6 +62,7 @@ openssl-1.1
 physlock
 playerctl
 pulseaudio
+pulseaudio-bluetooth
 python
 python-adblock
 python-pipx
