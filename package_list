@@ -61,6 +61,7 @@ openssh
 openssl-1.1
 physlock
 pipewire
+pipewire-alsa
 playerctl
 pulseaudio
 pulseaudio-bluetooth
