@@ -6,9 +6,9 @@ function volume
   echo $argv | read action value
   switch $action
     case increase
-      amixer set Master $value%+
+      wpctl set-volume @DEFAULT_AUDIO_SINK@ $value%+
     case decrease
-      amixer set Master $value%-
+      wpctl set-volume @DEFAULT_AUDIO_SINK@ $value%-
     case '*'
       echo "Invalid action '$action'" >&2
       exit 1
@@ -17,30 +17,31 @@ end
 
 argparse -- $argv
 
-set amixer_output_regex "\w+: Playback ([0-9]+) \[([0-9]+)%\] \[(-?[0-9]+.[0-9]+)dB\] \[(on|off)\]"
+set amixer_output_regex "Volume: ([0-9]+.[0-9]+)\s?(\[MUTED\])?"
 
 echo $argv | read domain args
 switch $domain
   case toggle_mute
-    amixer set Master toggle
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
   case volume
     volume $args
   case previous
-    playctl previous
+    playerctl previous
   case next
-    playctl next
+    playerctl next
   case toggle_play
-    playclt play-pause
+    playerctl play-pause
   case refresh
   case '*'
     echo "Invalid domain '$domain'" >&2
     exit 1
 end
 
-amixer get Master |
-grep --extended-regexp --only-matching "$amixer_output_regex" |
-head --lines=1 |
-sed --regexp-extended "s/^$amixer_output_regex\$/\1 \2 \3 \4/" |
-read volume volume_percentage volume_gain volume_state
+wpctl get-volume @DEFAULT_AUDIO_SINK@ |
+sed --regexp-extended "s/^$amixer_output_regex\$/\1 \2/" |
+read volume_percentage volume_state
 
-echo "update $volume_percentage $volume_state" > audio_watcher.pipe
+printf "update %s %s"\
+  (math $volume_percentage x 100) \
+  (if test "$volume_state" = "[MUTED]"; echo "off"; else; echo "on"; end) \
+> audio_watcher.pipe

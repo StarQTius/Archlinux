@@ -5,7 +5,8 @@ set full_unit "█"
 set granularity (string length $units)
 
 argparse v/value=!_validate_int m/max=!_validate_int u/unit=!_validate_int -- $argv
-set unit_count (math $_flag_value / $_flag_max \* $_flag_unit)
+set bounded_value (math min $_flag_value, $_flag_max)
+set unit_count (math $bounded_value / $_flag_max \* $_flag_unit)
 set full_unit_count (math floor $unit_count)
 set last_unit_size (math 1 + floor \(\($unit_count - $full_unit_count\) \* $granularity\))
 
