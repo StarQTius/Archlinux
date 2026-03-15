@@ -1,0 +1,21 @@
+services:
+  base:
+    build: .
+    volumes:
+      - .:/code
+      - ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}:/xdg/${WAYLAND_DISPLAY}
+    working_dir: /code
+    environment:
+      RUST_BACKTRACE: 1
+      WAYLAND_DISPLAY: ${WAYLAND_DISPLAY}
+      XDG_RUNTIME_DIR: /xdg
+    tty: true
+  build:
+    extends: base
+    command: cargo build
+  shell:
+    extends: base
+    command: bash
+  vimplay:
+    extends: base
+    command: cargo run

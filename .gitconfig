@@ -1,5 +1,7 @@
 [user]
-	email = dussautoirp@gmail.com
+	email = starqtius@proton.me
 	name = StarQTius
 [core]
 	editor = nvim
+[init]
+	defaultBranch = main
