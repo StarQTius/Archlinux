@@ -3,13 +3,13 @@
 function get_acpi_info
   argparse -- $argv
 
-  set acpi_output_regex "Battery ([0-9]+): (\w+), ([0-9]+)%, ([0-9:]+).*"
+  set acpi_output_regex "Battery ([0-9]+): ([a-zA-Z ]+), ([0-9]+)%(, )?([0-9:]+)?.*"
 
   acpi |
   sed 's/charging at zero rate - will never fully charge\./00:00:00/' |
   grep --extended-regex --only-matching "$acpi_output_regex" |
   head --lines=1 |
-  sed --regexp-extended "s/^$acpi_output_regex\$/\1 \2 \3 \4/"
+  sed --regexp-extended "s/^$acpi_output_regex\$/\1 '\2' \3 \5/"
 end
 
 argparse -- $argv
@@ -20,12 +20,16 @@ set refresh_period 1
 set measures_max_count 10
 
 while true
-  get_acpi_info | read battery_id battery_state battery_charge estimated_time
+  get_acpi_info | read --tokenize battery_id battery_state battery_charge estimated_time
 
   if test "$previous_battery_state" != "$battery_state"
     set estimated_times
   end
   set previous_battery_state $battery_state
+
+  if test -z "$estimated_time"
+    set estimated_time "00:00:00"
+  end
 
   set estimated_times (
     echo $estimated_time $estimated_times |
