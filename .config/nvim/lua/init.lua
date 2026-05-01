@@ -162,6 +162,17 @@ function shell(relpath)
   vim.fn.termopen({"fish"}, {cwd = abspath})
 end
 
+vim.api.nvim_create_autocmd({"VimEnter"}, {
+  pattern = "*",
+  callback = function()
+    if vim.fn.argc() == 0 then
+      vim.cmd("tabnew")
+      vim.cmd("terminal")
+      vim.cmd("tabprevious")
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd({"TermOpen", "TermLeave"}, {
   pattern = "*",
   callback = function(ev)

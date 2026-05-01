@@ -1,0 +1,6 @@
+
+
+Error detected while processing VimLeave Autocommands for "*"..function remote#define#AutocmdBootstrap[7]..VimLeave Autocommands for "*"..function remote#define#request:
+line    2:
+Error invoking '/home/paulin/.local/share/nvim/plugged/semshi/rplugin/python3/semshi:autocmd:VimLeave:*' on channel 3 (python3-rplugin-host):
+no request handler registered for "/home/paulin/.local/share/nvim/plugged/semshi/rplugin/python3/semshi:autocmd:VimLeave:*"

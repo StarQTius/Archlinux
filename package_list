@@ -4,6 +4,7 @@ alacritty
 alsa-utils
 android-tools
 autotiling
+awww
 base
 base-devel
 bass-fish
@@ -74,7 +75,6 @@ starship
 sudo
 sway
 swayidle
-swww
 terminus-font
 termshark
 tmux
