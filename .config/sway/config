@@ -1,5 +1,6 @@
 set $ui_dir $HOME/bin/ui
 
+font GohuFont 11 Nerd Font Mono
 set $font_color #ffffff
 set $unselected_font_color #ffffff77
 set $background_color #0a0c107f
