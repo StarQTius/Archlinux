@@ -79,6 +79,6 @@ client.unfocused $transparent_color $background_color $unselected_font_color $ba
 default_border pixel 1
 default_floating_border none
 
-exec swww-daemon
+exec awww-daemon
 
 exec_always autotiling
