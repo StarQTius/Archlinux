@@ -59,6 +59,7 @@ ntp
 nvme-cli
 openssh
 openssl-1.1
+otf-monaspace
 physlock
 pipewire
 pipewire-alsa

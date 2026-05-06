@@ -1,9 +1,9 @@
 set $ui_dir $HOME/bin/ui
 
-font GohuFont 11 Nerd Font Mono
+font pango:Monaspace Krypton 10
 set $font_color #ffffff
 set $unselected_font_color #ffffff77
-set $background_color #0a0c107f
+set $background_color #0a0c109f
 set $selected_background_color #777777ff
 set $selected_border_color #ffffff55
 set $transparent_color #00000000

@@ -148,5 +148,9 @@ hi TabLine guibg=NONE guifg=#546178
 hi TabLineFill guibg=NONE
 hi TabLineSel guifg=#a5b0c5 guibg=NONE
 
+hi Search guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm=reverse
+hi IncSearch guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm=reverse
+hi CurSearch guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm=reverse
+
 " Don't jump when starring words
 noremap * *N
