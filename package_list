@@ -40,6 +40,7 @@ htop
 imagemagick
 inetutils
 intel-media-driver
+jq
 libbsd
 libdbusmenu-gtk2
 libindicator-gtk2
