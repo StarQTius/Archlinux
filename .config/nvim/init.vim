@@ -122,9 +122,6 @@ tmap <A-0> <ESC>:tabn 10<CR>
 nmap <C-u> :Gitsigns prev_hunk<CR>
 nmap <C-d> :Gitsigns next_hunk<CR>
 
-" Do not substitute register content with replaced text when pasting
-nnoremap p ""p
-
 " Jump to a subject
 nnoremap <CR> <C-]>
 
