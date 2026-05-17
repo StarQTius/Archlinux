@@ -43,13 +43,13 @@ cnoreabbrev bs BrowseSplit
 command -nargs=? Quickfind lua quickfind(<f-args>)
 cnoreabbrev qf Quickfind
 
-command -nargs=? QuickfindSplit vsplit | Quickfind <args>
+command -nargs=? QuickfindSplit vsplit | lua quickfindclose(<f-args>)
 cnoreabbrev qs QuickfindSplit
 
 command -nargs=? Deepfind lua deepfind(<f-args>)
 cnoreabbrev df Deepfind
 
-command -nargs=? DeepfindSplit vsplit | Deepfind <args>
+command -nargs=? DeepfindSplit vsplit | lua deepfindclose(<f-args>)
 cnoreabbrev ds DeepfindSplit
 
 command -nargs=? -complete=file Shell lua shell(<f-args>)
@@ -151,3 +151,6 @@ hi CurSearch guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm=r
 
 " Don't jump when starring words
 noremap * *N
+
+" Open file under cursor
+noremap gf <ESC>:lua open(vim.fn.expand("<cWORD>"))<CR>

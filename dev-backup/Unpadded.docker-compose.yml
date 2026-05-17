@@ -2,8 +2,8 @@ services:
   base:
     build: .
     volumes:
-      - .:/code
-    working_dir: /code
+      - .:/home/paulin/Unpadded
+    working_dir: /home/paulin/Unpadded
     tty: true
   check:
     extends: base

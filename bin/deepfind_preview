@@ -15,7 +15,7 @@ if test -n "$line_number"
     --highlight-line="$line_number" \
     "$filepath"
 else
-  batcat \
+  bat \
     --color=always \
     "$filepath"
 end

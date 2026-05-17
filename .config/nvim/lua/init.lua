@@ -89,17 +89,37 @@ function browse(relpath)
   end
 end
 
-function quickfind(pattern, relpath)
-  return deepfind(pattern, relpath, true)
+function quickfind(pattern, path)
+  if type(path) == "nil" then
+    path = vim.fn.getcwd()
+  end
+
+  return deepfind(pattern, vim.fn.getcwd(), true, false)
 end
 
-function deepfind(pattern, relpath, file_only)
+function quickfindclose(pattern, path)
+  if type(path) == "nil" then
+    path = vim.fn.getcwd()
+  end
+
+  return deepfind(pattern, path, true, true)
+end
+
+function deepfindclose(pattern, path)
+  return deepfind(pattern, path, false, true)
+end
+
+function deepfind(pattern, path, file_only, close_on_failure)
   if type(pattern) == "nil" then
     pattern = vim.fn.getreg("/"):match("^\\<(.*)\\>$")
   end
 
-  if type(relpath) == "nil" then
-    relpath = "."
+  if type(path) == "nil" then
+    path = "."
+  end
+
+  if type(close_on_failure) == "nil" then
+    close_on_failure = false
   end
 
   if type(file_only) == "nil" then
@@ -110,15 +130,17 @@ function deepfind(pattern, relpath, file_only)
     error(("'pattern' is a '%s' value, expected 'string'"):format(type(pattern)))
   end
 
-  if type(relpath) ~= "string" then
-    error(("'relpath' is a '%s' value, expected 'string'"):format(type(relpath)))
+  if type(path) ~= "string" then
+    error(("'path' is a '%s' value, expected 'string'"):format(type(path)))
   end
 
   if type(file_only) ~= "boolean" then
     error(("'file_only' is a '%s' value, expected 'boolean'"):format(type(file_path)))
   end
 
-  local abspath = get_buffer_directory(0) .. "/" .. relpath
+  local abspath = (path:match("^/.*$"))
+    and path
+    or get_buffer_directory(0) .. "/" .. path
   local newbuf = vim.api.nvim_create_buf(false, true)
   local oldbuf = vim.api.nvim_win_get_buf(0)
 
@@ -126,6 +148,11 @@ function deepfind(pattern, relpath, file_only)
   vim.api.nvim_win_set_buf(0, newbuf)
 
   local function edit_choosen_file(jobid, code, event)
+    if code ~= 0 and close_on_failure then
+      vim.api.nvim_buf_delete(newbuf, {force=true})
+      return
+    end
+
     if code ~= 0 then
       vim.api.nvim_win_set_buf(0, oldbuf)
       vim.api.nvim_buf_delete(newbuf, {force=true})
@@ -160,6 +187,27 @@ function shell(relpath)
   vim.api.nvim_buf_set_var(newbuf, "custom_term_flag", nil)
   vim.api.nvim_win_set_buf(0, newbuf)
   vim.fn.termopen({"fish"}, {cwd = abspath})
+end
+
+function open(path)
+  if type(path) ~= "string" then
+    error(("'path' is a '%s' value, expected 'string'"):format(type(path)))
+  end
+
+  if path:match("^[<\"].*[>\"]$") then
+    path = path:sub(2, -2)
+  end
+
+  local abspath = (path:match("^/.*$"))
+    and path
+    or get_buffer_directory(0) .. "/" .. path
+
+  vim.cmd.vsplit()
+  if vim.fn.filereadable(abspath) == 1 then
+    vim.cmd.edit(abspath)
+  else
+    quickfindclose(path)
+  end
 end
 
 vim.api.nvim_create_autocmd({"VimEnter"}, {
