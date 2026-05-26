@@ -9,6 +9,14 @@ switch (count $argv)
     exit 1
 end
 
+if test -d "$filepath"
+  echo "────────────────────────────────────────────────────────────────────────────────"
+  echo "Content of '$filepath'"
+  echo "────────────────────────────────────────────────────────────────────────────────"
+  ls --color=always "$filepath"
+  exit 0
+end
+
 if test -n "$line_number"
   bat \
     --color=always \

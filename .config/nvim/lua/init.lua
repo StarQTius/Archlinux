@@ -194,6 +194,15 @@ function open(path)
     error(("'path' is a '%s' value, expected 'string'"):format(type(path)))
   end
 
+  p, row, col = path:gmatch("(/.*):([0-9]+):([0-9]+):")()
+  if p then
+    path = p
+  end
+
+  if not row then
+    row = 0
+  end
+
   if path:match("^[<\"].*[>\"]$") then
     path = path:sub(2, -2)
   end
@@ -204,7 +213,7 @@ function open(path)
 
   vim.cmd.vsplit()
   if vim.fn.filereadable(abspath) == 1 then
-    vim.cmd.edit(abspath)
+    vim.cmd(("edit +%i %s"):format(row, path))
   else
     quickfindclose(path)
   end
