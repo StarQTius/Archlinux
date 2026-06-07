@@ -69,6 +69,7 @@ python
 python-adblock
 python-pipx
 python-pynvim
+qutebrowser
 rclone
 refind
 seahorse
