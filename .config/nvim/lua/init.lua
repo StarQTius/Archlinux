@@ -199,6 +199,11 @@ function open(path)
     path = p
   end
 
+  p, row = path:gmatch("(/.*):([0-9]+)")()
+  if p then
+    path = p
+  end
+
   if not row then
     row = 0
   end

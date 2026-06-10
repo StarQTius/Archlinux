@@ -47,8 +47,10 @@ libindicator-gtk2
 linux
 linux-firmware
 linux-headers
+lshw
 make
 man-db
+ncdu
 neovim
 net-tools
 networkmanager
@@ -92,5 +94,4 @@ wiremix
 wireplumber
 wl-clipboard
 yay-bin
-yay-bin-debug
 zathura
