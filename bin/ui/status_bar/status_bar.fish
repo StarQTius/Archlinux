@@ -8,8 +8,8 @@ set ui_dir $HOME/ui/control
 mkfifo status_bar.pipe
 $this_script_dir/audio_watcher.fish &
 $this_script_dir/battery_watcher.fish &
-$this_script_dir/brightness_watcher.fish &
 $this_script_dir/clock_watcher.fish &
+$this_script_dir/process_watcher.fish &
 
 while true
   read command args < status_bar.pipe
@@ -23,10 +23,17 @@ while true
       set brightness_status $args
     case clock
       set clock_status $args
+    case process
+      set process_status $args
     case '*'
       echo "Invalid command '$command'" >&2
       exit 1
   end
   
-  echo $battery_status $sound_status $brightness_status $clock_status
+  printf "%s %s %s %s %s" \
+    "$process_status" \
+    "$battery_status" \
+    "$sound_status" \
+    "$brightness_status" \
+    "$clock_status"
 end

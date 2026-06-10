@@ -49,6 +49,7 @@ linux-firmware
 linux-headers
 lshw
 make
+mako
 man-db
 ncdu
 neovim
