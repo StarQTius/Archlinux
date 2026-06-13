@@ -16,7 +16,7 @@ while true
       echo "Invalid command '$command'" >&2
   end
 
-  printf "sound Sound %.3i%% %s⎸" \
+  printf "sound Sound %.3i%% %s⎸\n" \
     $volume_percentage \
     (progress --value=(if test $volume_state = on; echo $volume_percentage; else; echo 0; end) --max=200 --unit=4) \
   > status_bar.pipe

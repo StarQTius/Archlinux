@@ -45,12 +45,12 @@ while true
   read estimate_hours estimate_minutes
 
   if test $flasher -eq 1 -a $battery_charge -lt $critical_battery_charge
-    printf "battery Battery %.3i%%            %s⎸" \
+    printf "battery Battery %.3i%%            %s⎸\n" \
       $battery_charge \
       (progress --value=$battery_charge --max=100 --unit=4) \
     > status_bar.pipe
   else
-    printf "battery Battery %.3i%% (%sh%smin) %s⎸" \
+    printf "battery Battery %.3i%% (%sh%smin) %s⎸\n" \
       $battery_charge \
       $estimate_hours \
       $estimate_minutes \

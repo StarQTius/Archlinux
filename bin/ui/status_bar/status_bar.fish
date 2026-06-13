@@ -30,7 +30,7 @@ while true
       exit 1
   end
   
-  printf "%s %s %s %s %s" \
+  printf "%s %s %s %s %s\n" \
     "$process_status" \
     "$battery_status" \
     "$sound_status" \

@@ -1,10 +1,10 @@
 #!/bin/fish
 
-while sleep 1
-  ps -a -o pcpu,time,ucmd \
+while true
+  ps -ae -o pcpu,time,ucmd \
   | sort --reverse \
   | tail --lines=+2 \
-  | sed -E --quiet "s/^([0-9]{2}\.[0-9]) ([0-9]+:[0-9]+:[0-9]+) (.+)\$/\1 \2 \3/p" \
+  | sed -E --quiet "s/^([0-9]+\.[0-9]+) ([0-9]+:[0-9]+:[0-9]+) (.+)\$/\1 \2 \3/p" \
   | head --lines=1 \
   | read cpu_usage duration process_name
 
@@ -18,9 +18,11 @@ while sleep 1
     "$(echo $duration_seconds"s")"
   )
 
-  if test -n "$cpu_usage" -a -n "$process_name"
+  if test -n "$cpu_usage" -a -n "$process_name" -a "$cpu_usage" -ge 30
     echo "process ⎸$process_name@$cpu_usage% ($pretty_duration) ⎸" > status_bar.pipe
+    sleep 1
   else
     echo "process" > status_bar.pipe
+    sleep 1
   end
 end

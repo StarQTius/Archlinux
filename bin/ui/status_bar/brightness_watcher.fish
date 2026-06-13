@@ -16,7 +16,7 @@ while true
       echo "Invalid command '$command'" >&2
   end
 
-  printf "brightness Brightness %.3i%% %s⎸" \
+  printf "brightness Brightness %.3i%% %s⎸\n" \
     $brightness \
     (progress --value=$brightness --max=100 --unit=4) \
   > status_bar.pipe
