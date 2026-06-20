@@ -150,7 +150,7 @@ hi IncSearch guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm=r
 hi CurSearch guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm=reverse
 
 " Don't jump when starring words
-noremap * *N
+noremap <expr> * (expand("<cword>")==getreg("/")[2:-3] && v:hlsearch) ? ':nohl<CR>' : '*N'
 
 " Open file under cursor
 noremap gf <ESC>:lua open(vim.fn.expand("<cWORD>"))<CR>

@@ -13,7 +13,8 @@ while true
   switch $command
     case update
     case '*'
-      echo "Invalid command '$command'" >&2
+      echo "Invalid audio command '$command'" >&2
+      exit 1
   end
 
   printf "sound Sound %.3i%% %s⎸\n" \

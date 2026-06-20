@@ -3,7 +3,6 @@
 argparse -- $argv
 
 set this_script_dir (status --current-filename | xargs dirname)
-set ui_dir $HOME/ui/control
 
 mkfifo status_bar.pipe
 $this_script_dir/audio_watcher.fish &
@@ -25,11 +24,15 @@ while true
       set clock_status $args
     case process
       set process_status $args
+    case ''
+      echo "Skipping empty line..." >&2
+      continue
     case '*'
       echo "Invalid command '$command'" >&2
       exit 1
   end
   
+  echo "Processing '$command $args'" >&2
   printf "%s %s %s %s %s\n" \
     "$process_status" \
     "$battery_status" \

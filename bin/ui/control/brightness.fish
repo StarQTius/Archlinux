@@ -11,6 +11,7 @@ switch $action
   case refresh
   case '*'
     echo "Invalid action '$action'"
+    exit 1
 end
 
 echo "update $(xbacklight -get)" > brightness_watcher.pipe
