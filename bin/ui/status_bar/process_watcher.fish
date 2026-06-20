@@ -1,14 +1,14 @@
 #!/bin/fish
 
 while true
-  ps -ae -o pcpu,time,ucmd \
-  | sort --reverse \
+  ps -ae -o pcpu,etimes,ucmd \
   | tail --lines=+2 \
-  | sed -E --quiet "s/^([0-9]+\.[0-9]+) ([0-9]+:[0-9]+:[0-9]+) (.+)\$/\1 \2 \3/p" \
+  | sort --reverse -n \
+  | sed -E --quiet "s/^([0-9 ]+\.?[0-9]*)[ ]+([0-9]+) (.+)\$/\1 \2 \3/p" \
   | head --lines=1 \
   | read cpu_usage duration process_name
 
-  echo "$duration" \
+  date --utc --date="@$duration" +"%H:%M:%S" \
   | sed --regexp-extended 's/([0-9]+):([0-9]+):([0-9]+)/\1 \2 \3/' \
   | read duration_hours duration_minutes duration_seconds
 

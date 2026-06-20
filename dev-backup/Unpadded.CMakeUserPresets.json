@@ -5,7 +5,7 @@
       "name": "user",
       "inherits": "clang",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "-Werror -Wall -Wextra -ftemplate-backtrace-limit=0 -ftime-trace"
+        "CMAKE_CXX_FLAGS": "-Werror -Wall -Wextra -ftemplate-backtrace-limit=0 -ferror-limit=1 -ftime-trace"
       }
     }
   ]
