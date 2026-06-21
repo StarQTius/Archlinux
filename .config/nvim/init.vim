@@ -154,3 +154,6 @@ noremap <expr> * (expand("<cword>")==getreg("/")[2:-3] && v:hlsearch) ? ':nohl<C
 
 " Open file under cursor
 noremap gf <ESC>:lua open(vim.fn.expand("<cWORD>"))<CR>
+
+" Run deepfind with word under cursor
+noremap gs <ESC>:vsplit<ESC>:lua deepfindclose(vim.fn.expand("<cword>"))<CR>

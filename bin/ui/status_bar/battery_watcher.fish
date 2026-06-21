@@ -50,10 +50,12 @@ while true
       (progress --value=$battery_charge --max=100 --unit=4) \
     > status_bar.pipe
   else
-    printf "battery Battery %.3i%% (%sh%smin) %s⎸\n" \
-      $battery_charge \
-      $estimate_hours \
-      $estimate_minutes \
+    printf "battery Battery %.3i%% (%sh%smin) <span foreground='#%02x%02x33'>%s</span>⎸\n" \
+      "$battery_charge" \
+      "$estimate_hours" \
+      "$estimate_minutes" \
+      (math \(100 - "$battery_charge"\) / 100 x 255) \
+      (math "$battery_charge" / 100 x 255) \
       (progress --value=$battery_charge --max=100 --unit=4) \
     > status_bar.pipe
   end

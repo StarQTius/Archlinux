@@ -18,7 +18,7 @@ while true
     "$(echo $duration_seconds"s")"
   )
 
-  if test -n "$cpu_usage" -a -n "$process_name" -a "$cpu_usage" -ge 30
+  if test -n "$cpu_usage" -a -n "$process_name" -a "$cpu_usage" -ge 20
     echo "process ⎸$process_name@$cpu_usage% ($pretty_duration) ⎸" > status_bar.pipe
     sleep 0.1
   else

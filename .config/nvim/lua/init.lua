@@ -218,7 +218,7 @@ function open(path)
 
   vim.cmd.vsplit()
   if vim.fn.filereadable(abspath) == 1 then
-    vim.cmd(("edit +%i %s"):format(row, path))
+    vim.cmd(("edit +%i %s"):format(row, abspath))
   else
     quickfindclose(path)
   end
