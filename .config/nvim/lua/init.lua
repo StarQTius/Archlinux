@@ -173,7 +173,24 @@ function deepfind(pattern, path, file_only, close_on_failure)
   vim.cmd("startinsert")
 end
 
-function shell(relpath)
+function shell(relpath, close_on_success)
+  
+  if type(close_on_success) == "nil" then
+    close_on_success = true
+  end
+
+  if type(close_on_success) ~= "boolean" then
+    error(("'file_only' is a '%s' value, expected 'boolean'"):format(type(file_path)))
+  end
+
+  local buf = nil
+  local function exit_shell(jobid, code, event)
+    if code == 0 and close_on_success and buf ~= nil then
+      vim.api.nvim_buf_delete(buf, {force=true})
+      return
+    end
+  end
+
   if type(relpath) == "nil" then
     relpath = "."
   end
@@ -186,7 +203,11 @@ function shell(relpath)
   local newbuf = vim.api.nvim_create_buf(true, false)
   vim.api.nvim_buf_set_var(newbuf, "custom_term_flag", nil)
   vim.api.nvim_win_set_buf(0, newbuf)
-  vim.fn.termopen({"fish"}, {cwd = abspath})
+  vim.fn.termopen({"fish"}, {
+    cwd = abspath,
+    on_exit = exit_shell
+  })
+  buf = vim.api.nvim_win_get_buf(0)
 end
 
 function open(path)
