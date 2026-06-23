@@ -89,8 +89,10 @@ ttf-jetbrains-mono
 unzip
 usb_modeswitch
 usbutils
+vifm
 vim
 vlc
+vlc-plugin-ffmpeg
 wev
 wiremix
 wireplumber
