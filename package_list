@@ -14,6 +14,7 @@ bluez
 bluez-libs
 bluez-utils
 chromium
+claude-code
 cronie
 cursor-cli
 debootstrap
