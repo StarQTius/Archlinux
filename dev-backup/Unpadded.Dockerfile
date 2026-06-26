@@ -23,7 +23,6 @@ RUN --mount=type=cache,id=Unpadded,target=/var/cache/apk \
   curl-dev \
   gcc=15.2.0-r5 \
   gdb \
-  git-warp-time \
   libxml2-dev \
   linux-headers \
   llvm21-dev \
