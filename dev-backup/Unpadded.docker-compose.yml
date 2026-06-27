@@ -46,3 +46,27 @@ services:
   shell:
     extends: base
     command: bash
+  report_build_time:
+    extends: base
+    command: |
+      bash -c '
+        set -euo pipefail
+
+        ClangBuildAnalyzer --all build_clang capture.bin
+
+        echo "| File | Build Duration |"
+        echo "| --- | --- |"
+
+        ClangBuildAnalyzer --analyze capture.bin \
+        | awk "/Files that took longest to parse/ {
+            flag=1
+            next
+          }
+          flag && /^$/ {exit}
+          flag { gsub(/ms/, \"\") }" 
+        | while read -r duration filepath; do
+          printf "| %s | %s |\n" \
+            "$(basename "$filepath")"
+            "$(date --utc --date="@$duration" +"%Mmin %Ss")"
+        done
+      '
