@@ -215,12 +215,7 @@ function open(path)
     error(("'path' is a '%s' value, expected 'string'"):format(type(path)))
   end
 
-  p, row, col = path:gmatch("(/.*):([0-9]+):([0-9]+):")()
-  if p then
-    path = p
-  end
-
-  p, row = path:gmatch("(/.*):([0-9]+)")()
+  p, row, col = path:gmatch("(/[^:]*):([0-9]+):([0-9]*):?")()
   if p then
     path = p
   end
