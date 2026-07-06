@@ -215,7 +215,7 @@ function open(path)
     error(("'path' is a '%s' value, expected 'string'"):format(type(path)))
   end
 
-  p, row, col = path:gmatch("(/[^:]*):([0-9]+):([0-9]*):?")()
+  p, row, col = path:gmatch("(/[^:]*):([0-9]+):?([0-9]*):?")()
   if p then
     path = p
   end
@@ -276,3 +276,9 @@ vim.api.nvim_create_autocmd({"TermOpen", "TermLeave"}, {
   end,
 })
 
+vim.api.nvim_create_autocmd({"BufWinEnter"}, {
+  pattern = "*",
+  callback = function(ev)
+    vim.cmd("match Comment /\\%>80v.\\+/")
+  end,
+})

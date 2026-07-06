@@ -46,6 +46,9 @@ services:
   shell:
     extends: base
     command: bash
+  debug_unitary:
+    extends: base
+    command: gdb build_clang/test/upd_unitary
   report_build_time:
     extends: base
     command: |
