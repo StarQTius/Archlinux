@@ -1,0 +1,96 @@
+#!/bin/fish
+
+switch (count $argv)
+  case 0
+    echo "Usage: $(status -f) COMMAND [ARGS...]" >&2
+    exit 1
+  case '*'
+    set full_command $argv
+end
+
+function main
+  while true
+    echo "Running '$full_command'..." >&2
+    $full_command &| process
+    
+    test "$status" -eq 0 || return "$status"
+    test "$pipestatus[1]" -eq 0 || return 0
+  end
+end
+
+function process
+  while read line
+    echo "$line" \
+    | sed -E --quiet "s/^(.*) should (add|remove) these lines:\$/\1 \2/p" \
+    | read source_path section_type
+
+    if test -z "$source_path" -o -z "$section_type"
+      continue
+    end
+
+    switch "$section_type"
+      case add
+        echo "Adding #include to '$source_path'..." >&2
+        process_addition "$source_path"
+      case remove
+        echo "Removing #include to '$source_path'..." >&2
+        process_removal "$source_path"
+      case '*'
+        echo "Unknown section type '$section_type'" >&2
+    end
+
+    test "$status" -eq 0 || return "$status"
+  end
+end
+
+function process_addition -a source_path
+  while read line
+    if test -z "$line"
+      return 0
+    end
+
+    set addition (
+      echo "$line" \
+      | sed -E --quiet "s/^(#include [\"<][^\"<>]+[\">]).*/\1/p" \
+      | string replace --all "/" "\/"
+    )
+    if test -z "$addition"
+      echo "Warning: expecting an #include addition, got '$line'" >&2
+      continue
+    end
+
+    sed -E --in-place \
+      "0,/^(#include .*)\$/s//$addition\n\1/" \
+      "$source_path"
+    
+    test "$status" -eq 0 || return "$status"
+  end
+end
+
+function process_removal -a source_path
+  while read line
+    if test -z "$line"
+      return 0
+    end
+
+    set removal (
+      echo "$line" \
+      | sed -E --quiet "s/^- (#include [\"<][^\"<>]+[\">]).*/\1/p" \
+      | string replace --all "/" "\/"
+    )
+    if test -z "$removal"
+      echo "Warning: expecting an #include removal, got '$line'" >&2
+      continue
+    end
+    
+    sed -E --in-place \
+      "0,/^$removal.*\$/{
+        //d
+      }" \
+      "$source_path"
+    
+    test "$status" -eq 0 || return "$status"
+  end
+end
+
+main
