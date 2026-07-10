@@ -49,6 +49,9 @@ services:
   debug_unitary:
     extends: base
     command: gdb build_clang/test/upd_unitary
+  debug_dynamixel2:
+    extends: base
+    command: gdb build_clang/example/Dynamixel2
   report_build_time:
     extends: base
     command: |
