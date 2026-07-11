@@ -1,16 +1,16 @@
 #!/bin/fish
 
 function call_doco
-    docker compose $argv
-    exit $status
+  eval "docker compose $argv"
+  exit "$status"
 end
 
 if test (count $argv) -eq 0
-    call_doco
+  call_doco
 end
 
-if test $argv[1] = "run"
-    set argv $argv[1] --rm $argv[2..]
+if string match "*run*" -- "$argv"
+  set argv (string replace "run" "run --rm --remove-orphans" -- "$argv")
 end
 
 call_doco $argv
