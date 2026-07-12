@@ -273,6 +273,7 @@ vim.api.nvim_create_autocmd({"TermOpen", "TermLeave"}, {
     local success, custom_name = pcall(vim.api.nvim_buf_get_var, buf, "termimal_custom_name")
     local term_name = success and custom_name or vim.fn.simplify(get_buffer_directory(0))
     vim.api.nvim_buf_set_name(buf, ("%i|%s"):format(pid, term_name))
+    vim.cmd("match none")
   end,
 })
 
