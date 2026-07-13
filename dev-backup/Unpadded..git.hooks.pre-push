@@ -1,0 +1,39 @@
+#!/bin/sh
+
+exec 9>git_push.lock
+if ! flock --nonblocking 9; then
+  echo "A push is already ongoing" >&2
+  exit 1
+fi
+
+git -C mirror/ fetch --all
+git -C mirror/ checkout origin/HEAD
+cp Dockerfile docker-compose.yml CMakeUserPresets.json mirror/
+sed --in-place "/volumes:/,+2{
+  s|- .:/home/paulin/Unpadded|- .:/home/paulin/Unpadded/mirror|
+  s|working_dir: /home/paulin/Unpadded|working_dir: /home/paulin/Unpadded/mirror|
+}" "mirror/docker-compose.yml"
+
+git -C mirror/ restore-mtime
+
+doco --file mirror/docker-compose.yml run fixme \
+&& doco --file mirror/docker-compose.yml run check \
+&& doco --file mirror/docker-compose.yml run check_full \
+&& autoiwyu --root-path=/home/paulin/Unpadded/mirror/include/upd "doco --file mirror/docker-compose.yml run iwyu_k" \
+&& doco --file mirror/docker-compose.yml run fixme
+
+if test "$?" -ne 0; then
+  exit 1
+fi
+
+if ! git -C mirror/ commit -a --fixup=HEAD; then
+  exit 0
+fi
+
+git -C mirror/ rebase --autosquash HEAD~100 \
+&& git fetch mirror HEAD \
+&& git reset $(git -C mirror/ rev-parse HEAD)
+
+echo "The pre-push hook changed the branch HEAD" >&2
+echo "Please push your changes again to complete the operation" >&2
+exit 1

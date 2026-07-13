@@ -1,0 +1,6 @@
+#!/bin/fish
+
+doco run fixme \
+&& git add (git diff --staged --name-only)
+
+echo

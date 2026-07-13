@@ -14,7 +14,7 @@ if [ -z "$TOP_LEVEL_INIT" ]; then
   
   echo "Saving home project Dockerfiles"
   find */Dockerfile */docker-compose.yml */CMakeUserPresets.json */.git/hooks -type f \
-  | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's:/:.:')"
+  | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's|/|.|g')"
 
   echo "Pushing save"
   git add -A
