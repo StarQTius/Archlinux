@@ -13,7 +13,7 @@ if [ -z "$TOP_LEVEL_INIT" ]; then
   npm list --global --depth=0 --json > npm_list.json
   
   echo "Saving home project Dockerfiles"
-  ls */Dockerfile */docker-compose.yml */CMakeUserPresets.json | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's:/:.:')"
+  ls */Dockerfile */docker-compose.yml */CMakeUserPresets.json */.git/hooks | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's:/:.:')"
 
   echo "Pushing save"
   git add -A
@@ -23,8 +23,8 @@ if [ -z "$TOP_LEVEL_INIT" ]; then
   echo "Update dbus activation environment"
   dbus-update-activation-environment --all
 
-  echo "Start time keeping"
-  fish /home/paulin/bin/timekeeper &disown
+  # echo "Start time keeping"
+  # fish /home/paulin/bin/timekeeper &disown
   
   export TOP_LEVEL_INIT=1
 

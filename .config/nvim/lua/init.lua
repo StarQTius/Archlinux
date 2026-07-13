@@ -228,6 +228,11 @@ function open(path)
     path = path:sub(2, -2)
   end
 
+  gitp = path:gmatch("[ab](/[^:]*)")()
+  if gitp then
+    path = vim.fn.getcwd() .. gitp
+  end
+
   local abspath = (path:match("^/.*$"))
     and path
     or get_buffer_directory(0) .. "/" .. path
