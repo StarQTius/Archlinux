@@ -13,7 +13,8 @@ if [ -z "$TOP_LEVEL_INIT" ]; then
   npm list --global --depth=0 --json > npm_list.json
   
   echo "Saving home project Dockerfiles"
-  ls */Dockerfile */docker-compose.yml */CMakeUserPresets.json */.git/hooks | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's:/:.:')"
+  find */Dockerfile */docker-compose.yml */CMakeUserPresets.json */.git/hooks -type f \
+  | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's:/:.:')"
 
   echo "Pushing save"
   git add -A
