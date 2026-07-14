@@ -250,7 +250,7 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
   callback = function()
     if vim.fn.argc() == 0 then
       vim.cmd("tabnew")
-      vim.cmd("terminal")
+      vim.cmd("Shell")
       vim.cmd("tabprevious")
     end
   end,
@@ -282,7 +282,7 @@ vim.api.nvim_create_autocmd({"TermOpen", "TermLeave"}, {
   end,
 })
 
-vim.api.nvim_create_autocmd({"BufWinEnter"}, {
+vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
   pattern = "*",
   callback = function(ev)
     vim.cmd("match Comment /\\%>80v.\\+/")

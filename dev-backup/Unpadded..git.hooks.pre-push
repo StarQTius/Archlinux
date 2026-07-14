@@ -16,9 +16,7 @@ sed --in-place "/volumes:/,+2{
 
 git -C mirror/ restore-mtime
 
-doco --file mirror/docker-compose.yml run fixme \
-&& doco --file mirror/docker-compose.yml run check \
-&& doco --file mirror/docker-compose.yml run check_full \
+autoiwyu --root-path=/home/paulin/Unpadded/mirror/include/upd "doco --file mirror/docker-compose.yml run quick_iwyu" \
 && autoiwyu --root-path=/home/paulin/Unpadded/mirror/include/upd "doco --file mirror/docker-compose.yml run iwyu_k" \
 && doco --file mirror/docker-compose.yml run fixme
 
