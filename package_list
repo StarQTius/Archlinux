@@ -80,9 +80,12 @@ refind
 seahorse
 smartmontools
 starship
+stress
+stress-ng
 sudo
 sway
 swayidle
+sysstat
 terminus-font
 termshark
 tmux

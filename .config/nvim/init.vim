@@ -59,6 +59,7 @@ command -nargs=? -complete=file ShellSplit vsplit | Shell <args>
 cnoreabbrev ss ShellSplit
 
 cnoreabbrev gs Gitsigns
+cnoreabbrev gsr Gitsigns reset_hunk
 
 command -nargs=? -complete=file Bclear vsplit | bufdo if stridx(expand("%"), <q-args>) == 0 | bdelete | vsplit | endif | quit
 cnoreabbrev bc Bclear
