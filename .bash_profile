@@ -1,6 +1,8 @@
 export XKB_DEFAULT_LAYOUT=gb
 export TERM=alacritty
 export SHELL=fish
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_DESKTOP=sway
 
 if [ -z "$TOP_LEVEL_INIT" ]; then
   echo "Saving Pacman package list"
