@@ -20,6 +20,8 @@ for_window [title=__menu] \
 
 exec_always swayidle -w before-sleep "physlock -dms"
 
+xwayland enable
+
 bindsym $mod+Return exec alacritty
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+c reload
