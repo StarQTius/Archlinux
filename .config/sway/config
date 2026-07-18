@@ -64,7 +64,7 @@ bindsym XF86MonBrightnessDown exec $ui_dir/control/brightness.fish decrease 5
 
 bar {
     position top
-    status_command $ui_dir/status_bar/status_bar.fish 2>>status_bar.stderr
+    status_command $ui_dir/status_bar/status_bar.fish 2>status_bar.stderr
     colors {
         statusline $font_color
         background $background_color
