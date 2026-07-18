@@ -28,12 +28,13 @@ while true
   set cpu_usage (math ceil "$cpu_usage")
 
   if test -n "$cpu_usage" -a -n "$process_name" -a "$cpu_usage" -ge 20
-    printf "process ⎸%s@%.2f%% (%s) <span foreground='#%02x33%02x'>%s</span>⎸" \
+    printf "process ⎸%s@%.2f%% (%s) <span foreground='#%02x%02x%02x'>%s</span>⎸" \
       "$process_name" \
       "$cpu_usage" \
       "$pretty_duration" \
-      (math floor "$cpu_usage" / 100 x 200) \
-      (math 200) \
+      (math floor min "$cpu_usage" x 5, 255) \
+      (math floor max 255 - "$cpu_usage" x 2, 10) \
+      (math 40) \
       (progress --value="$cpu_usage" --max=100 --unit=10) \
     > status_bar.pipe
     sleep 0.1
