@@ -282,9 +282,15 @@ vim.api.nvim_create_autocmd({"TermOpen", "TermLeave"}, {
   end,
 })
 
-vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+vim.api.nvim_create_autocmd({"BufEnter"}, {
   pattern = "*",
   callback = function(ev)
+    local buf = ev.buf
+    local is_term, _ = pcall(vim.api.nvim_buf_get_var, buf, "terminal_job_id")
+    if is_term then
+      return
+    end
+    
     vim.cmd("match Comment /\\%>80v.\\+/")
   end,
 })
