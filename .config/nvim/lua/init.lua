@@ -62,6 +62,17 @@ local function get_buffer_directory(buf)
   return "."
 end
 
+local function get_buffer_path(buf)
+  local bufname = vim.api.nvim_buf_get_name(buf)
+  local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
+
+  if buftype == "" and bufname ~= "" then
+    return vim.fn.expand("%")
+  end
+
+  return "."
+end
+
 local function find_buffer_from_name(bufname)
   local buf = vim.fn.bufnr("^" .. bufname .. "$")
   return buf ~= -1 and buf or nil
@@ -243,6 +254,21 @@ function open(path)
   else
     quickfindclose(path)
   end
+end
+
+function yankpath(with_col)
+  if type(with_col) == "nil" then
+    with_col = false
+  end
+  
+  if type(with_col) ~= "boolean" then
+    error(("'with_col' is a '%s' value, expected 'boolean'"):format(type(with_col)))
+  end
+
+  row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  path = get_buffer_path(0) .. ((with_col) and ":" .. row or "")
+  vim.fn.setreg("", path)
+  vim.fn.setreg("+", path)
 end
 
 vim.api.nvim_create_autocmd({"VimEnter"}, {
