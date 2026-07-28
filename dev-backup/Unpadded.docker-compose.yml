@@ -9,6 +9,10 @@ services:
     extends: base
     command: bash --login -c '
       cmake --preset user && cmake --build build_clang -t check -j8'
+  check_mono:
+    extends: base
+    command: bash --login -c '
+      cmake --preset user && cmake --build build_clang -t check'
   check_full:
     extends: base
     command: bash --login -c '
