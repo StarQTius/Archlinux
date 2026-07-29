@@ -38,11 +38,13 @@ git-tools-git
 gnu-netcat
 grub
 gtk2
+harfbuzz-utils
 htop
 imagemagick
 inetutils
 intel-media-driver
 jq
+kitty
 libbsd
 libdbusmenu-gtk2
 libindicator-gtk2
