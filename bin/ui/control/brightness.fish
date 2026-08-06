@@ -5,13 +5,13 @@ argparse -- $argv
 echo $argv | read action value
 switch $action
   case increase
-    xbacklight -inc $value
+    brightnessctl set +$value%
   case decrease
-    xbacklight -dec $value
+    brightnessctl set $value%-
   case refresh
   case '*'
     echo "Invalid action '$action'"
     exit 1
 end
 
-echo "update $(xbacklight -get)" > brightness_watcher.pipe
+echo "update $(math 100 x (brightnessctl get) / (brightnessctl max))" > brightness_watcher.pipe

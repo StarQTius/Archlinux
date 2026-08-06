@@ -1,5 +1,4 @@
 acpi
-acpilight
 alacritty
 alsa-utils
 android-tools
@@ -13,6 +12,7 @@ bluetui
 bluez
 bluez-libs
 bluez-utils
+brightnessctl
 chromium
 claude-code
 cronie
@@ -36,7 +36,6 @@ git
 git-tools-git
 gnu-netcat
 grub
-gtk2
 harfbuzz-utils
 htop
 imagemagick
@@ -45,8 +44,6 @@ intel-media-driver
 jq
 kitty
 libbsd
-libdbusmenu-gtk2
-libindicator-gtk2
 linux
 linux-firmware
 linux-headers
@@ -66,7 +63,6 @@ ntp
 nvme-cli
 ollama
 openssh
-openssl-1.1
 otf-monaspace
 physlock
 pipewire
