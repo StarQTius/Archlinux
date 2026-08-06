@@ -274,7 +274,8 @@ end
 vim.api.nvim_create_autocmd({"VimEnter"}, {
   pattern = "*",
   callback = function()
-    if vim.fn.argc() == 0 then
+    local stdin_is_tty = vim.fn.has("ttyin") == 1
+    if vim.fn.argc() == 0 and stdin_is_tty then
       vim.cmd("tabnew")
       vim.cmd("Shell")
       vim.cmd("tabprevious")
