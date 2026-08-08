@@ -5,6 +5,7 @@ services:
       - .:/home/paulin/Unpadded
     working_dir: /home/paulin/Unpadded
     tty: true
+    image: unpadded
   check:
     extends: base
     command: bash --login -c '
