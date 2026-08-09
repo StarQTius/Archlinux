@@ -1,3 +1,3 @@
 #!/bin/fish
 
-bind \ck ' clear; commandline -f repaint'
+bind ctrl-f 'fuck --yeah; fish_prompt'

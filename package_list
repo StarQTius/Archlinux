@@ -1,4 +1,5 @@
 acpi
+aichat
 alacritty
 alsa-utils
 android-tools
@@ -61,7 +62,6 @@ npm
 ntfs-3g
 ntp
 nvme-cli
-ollama
 openssh
 otf-monaspace
 physlock
@@ -79,6 +79,7 @@ refind
 seahorse
 smartmontools
 starship
+strace
 stress
 stress-ng
 sudo
