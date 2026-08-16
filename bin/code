@@ -12,6 +12,7 @@ docker run -it --rm \
   --env ANTHROPIC_DEFAULT_SONNET_MODEL \
   --volume .:/workspace \
   --volume $HOME/.claude-code-home:/home/claude/ \
+  --volume $HOME:$HOME:ro \
   --workdir /workspace \
   claude-code \
-  claude --dangerously-skip-permissions --resume code
+  claude --dangerously-skip-permissions --resume=code
