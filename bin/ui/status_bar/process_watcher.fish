@@ -37,9 +37,9 @@ while true
       (math 40) \
       (progress --value="$cpu_usage" --max=100 --unit=10) \
     > status_bar.pipe
-    sleep 0.1
   else
     echo "process" > status_bar.pipe
-    sleep 1
   end
+  
+  sleep 1
 end

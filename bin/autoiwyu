@@ -20,7 +20,7 @@ else
 end
 
 function main
-  for _ in (seq 10)
+  for i in (seq 10)
     echo "Running '$full_command'..." >&2
     fish --command "$full_command" &| process
     

@@ -1,0 +1,17 @@
+#!/bin/fish
+
+docker build \
+  --file "$(status dirname)/code.Dockerfile" \
+  --tag claude-code \
+  (status dirname) \
+&& \
+docker run -it --rm \
+  --env ANTHROPIC_BASE_URL \
+  --env ANTHROPIC_AUTH_TOKEN \
+  --env ANTHROPIC_API_KEY \
+  --env ANTHROPIC_DEFAULT_SONNET_MODEL \
+  --volume .:/workspace \
+  --volume $HOME/.claude-code-home:/home/claude/ \
+  --workdir /workspace \
+  claude-code \
+  claude --dangerously-skip-permissions --resume code
