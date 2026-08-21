@@ -19,12 +19,14 @@ claude-code
 cronie
 debootstrap
 debugedit
+displaylink
 dkms
 docker
 docker-buildx
 docker-compose
 docx2txt
 downgrade
+evdi-dkms
 fakeroot
 firefox
 fish
