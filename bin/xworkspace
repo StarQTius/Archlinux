@@ -1,0 +1,21 @@
+#!/usr/bin/env fish
+# Switch workspace relative to focused output.
+#   On laptop (eDP-1): go to workspace $argv[1]
+#   On external monitor: go to workspace $argv[1] + 10
+
+if test (count $argv) -ne 1
+    echo "usage: xworkspace <number>" >&2
+    exit 1
+end
+
+set -l n $argv[1]
+set -l focused_output (swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')
+
+if test "$focused_output" = "eDP-1"
+    # laptop screen: use workspace as-is
+else
+    # external monitor: offset by 10
+    set n (math "$n + 10")
+end
+
+swaymsg workspace number $n
