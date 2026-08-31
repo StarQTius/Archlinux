@@ -14,7 +14,7 @@ set $menu swaymsg exec -- alacritty --title=__menu --command $ui_dir/menu.fish
 for_window [title=__menu] \
   floating enable, \
   resize set width 20 ppt height 100 ppt, \
-  move absolute position 0 px 20 px, \
+  move position 0 px 20 px, \
   sticky enable, \
   shortcuts_inhibitor enable
 
