@@ -1,5 +1,15 @@
 #!/bin/fish
 
+if ! argparse "f/fresh" -- $argv
+  exit "$status"
+end
+
+if set --local --query _flag_fresh
+  set with_history false
+else
+  set with_history true
+end
+
 docker build \
   --file "$(status dirname)/code.Dockerfile" \
   --tag claude-code \
@@ -15,4 +25,5 @@ docker run -it --rm \
   --volume $HOME:$HOME:ro \
   --workdir /workspace \
   claude-code \
-  claude --dangerously-skip-permissions --resume=code
+  claude --dangerously-skip-permissions \
+         ($with_history && echo -- --resume=code)

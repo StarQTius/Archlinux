@@ -1,0 +1,15 @@
+[package]
+name = "xworkspace"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+i3ipc = "0.10"
+
+[[bin]]
+name = "xworkspace"
+path = "xworkspace.rs"
+
+[[bin]]
+name = "xmove2workspace"
+path = "xmove2workspace.rs"
