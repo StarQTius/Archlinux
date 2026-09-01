@@ -5,6 +5,7 @@ argparse -- $argv
 set this_script_dir (status --current-filename | xargs dirname)
 
 mkfifo status_bar.pipe
+$this_script_dir/acpi_watcher.fish &
 $this_script_dir/audio_watcher.fish &
 $this_script_dir/battery_watcher.fish &
 $this_script_dir/brightness_watcher.fish &
