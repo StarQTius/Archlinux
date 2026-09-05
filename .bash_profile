@@ -14,6 +14,10 @@ if [ -z "$TOP_LEVEL_INIT" ]; then
   echo "Saving npm package list"
   npm list --global --depth=0 --json > npm_list.json
   
+  echo "Saving flatpak application and repository list"
+  flatpak list --user --columns=applications > flatpak_app_list
+  flatpak remotes --user --columns=name,url > flatpak_repo_list
+  
   echo "Saving home project Dockerfiles"
   find */Dockerfile */docker-compose.yml */CMakeUserPresets.json */.git/hooks -type f \
   | xargs --replace=% fish --command "cp % dev-backup/(echo % | sed 's|/|.|g')"
