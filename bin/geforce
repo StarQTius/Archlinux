@@ -1,3 +1,0 @@
-#!/bin/fish
-
-flatpak run com.nvidia.geforcenow

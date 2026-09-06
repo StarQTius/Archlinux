@@ -15,7 +15,7 @@ if [ -z "$TOP_LEVEL_INIT" ]; then
   npm list --global --depth=0 --json > npm_list.json
   
   echo "Saving flatpak application and repository list"
-  flatpak list --user --columns=applications > flatpak_app_list
+  flatpak list --user --columns=application > flatpak_app_list
   flatpak remotes --user --columns=name,url > flatpak_repo_list
   
   echo "Saving home project Dockerfiles"
