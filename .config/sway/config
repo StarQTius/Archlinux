@@ -22,6 +22,7 @@ exec_always swayidle -w before-sleep "physlock -dms"
 
 bindsym $mod+Return exec kitty
 bindsym $mod+d exec $menu
+bindsym $mod+Shift+q kill
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exit
 bindsym $mod+Left focus left
