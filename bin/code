@@ -1,6 +1,6 @@
 #!/bin/fish
 
-if ! argparse "f/fresh" -- $argv
+if ! argparse "f/fresh" "s/session=" -- $argv
   exit "$status"
 end
 
@@ -8,6 +8,12 @@ if set --local --query _flag_fresh
   set with_history false
 else
   set with_history true
+end
+
+if set --local --query _flag_session
+  set session "$_flag_session"
+else
+  set session "code"
 end
 
 docker build \
@@ -26,4 +32,5 @@ docker run -it --rm \
   --workdir /workspace \
   claude-code \
   claude --dangerously-skip-permissions \
-         ($with_history && echo -- --resume=code)
+    --resume="$session" \
+    (! $with_history && --fork-session)
