@@ -28,7 +28,7 @@ if [ -z "$TOP_LEVEL_INIT" ]; then
   git push
 
   echo "Update dbus activation environment"
-  dbus-update-activation-environment --all \
+  dbus-update-activation-environment \
     DISPLAY WAYLAND_DISPLAY \
     XDG_CURRENT_DESKTOP \
     XDG_SESSION_TYPE
