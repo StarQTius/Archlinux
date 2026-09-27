@@ -38,6 +38,10 @@ if [ -z "$TOP_LEVEL_INIT" ]; then
   
   export TOP_LEVEL_INIT=1
 
-  echo "Start sway"
+  for i in $(seq 3 0 -1); do
+    printf "Start sway in $i seconds...\r"
+  done
+  echo
+
   exec sway
 fi
