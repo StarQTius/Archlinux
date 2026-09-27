@@ -38,10 +38,15 @@ if [ -z "$TOP_LEVEL_INIT" ]; then
   
   export TOP_LEVEL_INIT=1
 
-  for i in $(seq 3 -1 1); do
-    printf "Start sway in $i seconds...\r"
-    sleep 1
+  run_sway=true
+  for i in 3 2 1; do
+    read -t 1 -p "Start sway in $i seconds... Press Enter to abort"$'\r' && {
+      run_sway=false
+      break
+    }
   done
 
-  exec sway
+  if $run_sway; then
+    exec sway
+  fi
 fi
