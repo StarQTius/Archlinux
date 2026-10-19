@@ -94,6 +94,7 @@ bar {
         statusline $font_color
         background $background_color
         inactive_workspace $background_color $background_color $unselected_font_color
+        active_workspace $background_color $background_color $unselected_font_color
         focused_workspace $background_color $background_color $font_color
     }
 }
