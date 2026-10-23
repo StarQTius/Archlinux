@@ -83,7 +83,19 @@ tmap <Esc> <C-\><C-n>
 " Truly clear the terminal
 tmap <c-l> <C-u><C-\><C-n>:set scrollback=1 \| sleep 100m \| set scrollback=10000<cr>iclear<cr>
 
-" Allow to change tab using function keys with NVO modes
+" Allow to change tab using function keys with NVO modes (AZERTY: &é"'(-è_çà = 1-0)
+map <A-&> :tabn 1<CR>
+map <A-é> :tabn 2<CR>
+map <A-"> :tabn 3<CR>
+map <A-'> :tabn 4<CR>
+map <A-(> :tabn 5<CR>
+map <A--> :tabn 6<CR>
+map <A-è> :tabn 7<CR>
+map <A-_> :tabn 8<CR>
+map <A-ç> :tabn 9<CR>
+map <A-à> :tabn 10<CR>
+
+" Also keep the original number keys for flexibility
 map <A-1> :tabn 1<CR>
 map <A-2> :tabn 2<CR>
 map <A-3> :tabn 3<CR>
@@ -95,7 +107,19 @@ map <A-8> :tabn 8<CR>
 map <A-9> :tabn 9<CR>
 map <A-0> :tabn 10<CR>
 
-" Allow to change tab using function keys with IC modes
+" Allow to change tab using function keys with IC modes (AZERTY)
+map! <A-&> <ESC>:tabn 1<CR>
+map! <A-é> <ESC>:tabn 2<CR>
+map! <A-"> <ESC>:tabn 3<CR>
+map! <A-'> <ESC>:tabn 4<CR>
+map! <A-(> <ESC>:tabn 5<CR>
+map! <A--> <ESC>:tabn 6<CR>
+map! <A-è> <ESC>:tabn 7<CR>
+map! <A-_> <ESC>:tabn 8<CR>
+map! <A-ç> <ESC>:tabn 9<CR>
+map! <A-à> <ESC>:tabn 10<CR>
+
+" Also keep the original number keys for flexibility
 map! <A-1> <ESC>:tabn 1<CR>
 map! <A-2> <ESC>:tabn 2<CR>
 map! <A-3> <ESC>:tabn 3<CR>
@@ -107,7 +131,19 @@ map! <A-8> <ESC>:tabn 8<CR>
 map! <A-9> <ESC>:tabn 9<CR>
 map! <A-0> <ESC>:tabn 10<CR>
 
-" Allow to change tab using function keys with TERMINAL mode
+" Allow to change tab using function keys with TERMINAL mode (AZERTY)
+tmap <A-&> <ESC>:tabn 1<CR>
+tmap <A-é> <ESC>:tabn 2<CR>
+tmap <A-"> <ESC>:tabn 3<CR>
+tmap <A-'> <ESC>:tabn 4<CR>
+tmap <A-(> <ESC>:tabn 5<CR>
+tmap <A--> <ESC>:tabn 6<CR>
+tmap <A-è> <ESC>:tabn 7<CR>
+tmap <A-_> <ESC>:tabn 8<CR>
+tmap <A-ç> <ESC>:tabn 9<CR>
+tmap <A-à> <ESC>:tabn 10<CR>
+
+" Also keep the original number keys for flexibility
 tmap <A-1> <ESC>:tabn 1<CR>
 tmap <A-2> <ESC>:tabn 2<CR>
 tmap <A-3> <ESC>:tabn 3<CR>
