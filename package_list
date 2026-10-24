@@ -74,6 +74,7 @@ physlock
 pipewire
 pipewire-alsa
 playerctl
+pulsemixer
 pyenv
 python
 python-adblock
