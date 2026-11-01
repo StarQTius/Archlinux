@@ -49,7 +49,6 @@ inetutils
 intel-media-driver
 jq
 kitty
-ladybird-git
 libbsd
 linux
 linux-firmware
@@ -91,7 +90,7 @@ strace
 stress
 stress-ng
 sudo
-sway
+swayfx
 swayidle
 sysstat
 terminus-font
