@@ -28,7 +28,7 @@ while true
   set cpu_usage (math ceil "$cpu_usage")
 
   if test -n "$cpu_usage" -a -n "$process_name" -a "$cpu_usage" -ge 20
-    printf "process ⎸%s@%.2f%% (%s) <span foreground='#%02x%02x%02x'>%s</span>⎸" \
+    printf "process ⎸%s@%.2f%% (%s) <span foreground='#%02x%02x%02x'>%s</span>⎸\n" \
       "$process_name" \
       "$cpu_usage" \
       "$pretty_duration" \

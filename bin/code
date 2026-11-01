@@ -32,5 +32,5 @@ docker run -it --rm \
   --workdir /workspace \
   claude-code \
   claude --dangerously-skip-permissions \
-    --resume="$session" \
-    (! $with_history && --fork-session)
+    ($with_history && echo --resume="$session") \
+    (! $with_history && echo --fork-session)
