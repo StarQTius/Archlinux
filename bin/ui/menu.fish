@@ -15,7 +15,7 @@ set user_choice (
   | uniq --skip-fields=1 \
   | sort --key=1n \
   | string replace --regex "^\s*[0-9]+\s*([^ ]+)\$" "\$1" \
-  | fzf --reverse --color="bg:#000000" --print-query \
+  | fzf --reverse --print-query \
   | tail --lines=1
 )
 
