@@ -10,12 +10,12 @@ set $transparent_color #00000000
 
 set $mod Mod4
 
-set $menu swaymsg exec -- kitty --override background_opacity=0 --title __menu $ui_dir/menu.fish
+set $menu swaymsg exec -- kitty --override background_opacity=0 --title __menu --class __menu $ui_dir/menu.fish
 for_window [title="__menu"] \
-  border none, \
+  border pixel 1, \
   floating enable, \
-  resize set width 20 ppt height 100 ppt, \
-  move position 0 px 0 px, \
+  resize set width 20 ppt height 99 ppt, \
+  move position 5 px 5 px, \
   sticky enable, \
   shortcuts_inhibitor enable, \
   blur enable, \
