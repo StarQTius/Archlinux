@@ -1,6 +1,6 @@
 set $ui_dir $HOME/bin/ui
 
-font pango:Ubuntu Mono 12
+font pango:Adwaita Mono Bold 10
 set $font_color #ffffff
 set $unselected_font_color #ffffff77
 set $background_color #0a0c109f
@@ -24,6 +24,7 @@ exec_always swayidle -w before-sleep "physlock -dms"
 
 bindsym $mod+Return exec kitty
 bindsym $mod+d exec $menu
+bindsym $mod+b blur enable
 bindsym $mod+Shift+q kill
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exit
@@ -80,8 +81,8 @@ bindsym $mod+Shift+underscore exec ~/utils/bin/xmove2workspace 8
 bindsym $mod+Shift+ccedilla exec ~/utils/bin/xmove2workspace 9
 bindsym $mod+Shift+agrave exec ~/utils/bin/xmove2workspace 10
 bindsym $mod+f fullscreen
-bindsym XF86AudioRaiseVolume exec $ui_dir/control/audio.fish volume increase 5
-bindsym XF86AudioLowerVolume exec $ui_dir/control/audio.fish volume decrease 5
+bindsym XF86AudioRaiseVolume exec $ui_dir/control/audio.fish volume increase 2.5
+bindsym XF86AudioLowerVolume exec $ui_dir/control/audio.fish volume decrease 2.5
 bindsym XF86AudioMute exec $ui_dir/control/audio.fish toggle_mute
 bindsym XF86AudioPrev exec $ui_dir/control/audio.fish previous
 bindsym XF86AudioNext exec $ui_dir/control/audio.fish next

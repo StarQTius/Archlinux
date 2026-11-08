@@ -41,7 +41,7 @@ wpctl get-volume @DEFAULT_AUDIO_SINK@ |
 sed --regexp-extended "s/^$amixer_output_regex\$/\1 \2/" |
 read volume_percentage volume_state
 
-printf "update %s %s"\
+printf "update %s %s\n"\
   (math $volume_percentage x 100) \
   (if test "$volume_state" = "[MUTED]"; echo "off"; else; echo "on"; end) \
 > audio_watcher.pipe

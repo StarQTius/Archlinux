@@ -10,7 +10,7 @@ $this_script_dir/audio_watcher.fish &
 $this_script_dir/battery_watcher.fish &
 $this_script_dir/brightness_watcher.fish &
 $this_script_dir/clock_watcher.fish &
-$this_script_dir/process_watcher.fish &
+process_watcher &
 
 while true
   read command args < status_bar.pipe

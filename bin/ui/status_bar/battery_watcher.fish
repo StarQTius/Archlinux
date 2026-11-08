@@ -56,7 +56,7 @@ while true
       "$estimate_minutes" \
       (math \(100 - "$battery_charge"\) / 100 x 255) \
       (math "$battery_charge" / 100 x 255) \
-      (progress --value=$battery_charge --max=100 --unit=4) \
+      (progress --value=$battery_charge --max=100 --unit=8) \
     > status_bar.pipe
   end
 
