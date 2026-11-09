@@ -201,3 +201,7 @@ noremap gs <ESC>:vsplit<ESC>:lua deepfindclose(vim.fn.expand("<cword>"))<CR>
 
 " Move to mark more easily
 noremap ~ `
+
+" ...
+noremap ss <ESC>:ShellSplit<Enter>a
+noremap sb <ESC>:BrowseSplit<Enter>

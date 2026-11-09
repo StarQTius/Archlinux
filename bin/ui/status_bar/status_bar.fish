@@ -31,7 +31,7 @@ while true
       continue
     case '*'
       echo "Invalid command '$command'" >&2
-      exit 1
+      continue
   end
   
   echo "Processing '$command $args'" >&2

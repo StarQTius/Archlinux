@@ -3,6 +3,7 @@ use std::thread;
 use std::time::Duration;
 use std::fs::OpenOptions;
 use std::io::Write;
+use humantime::format_duration;
 
 fn main() {
   let proc_refresh = ProcessRefreshKind::nothing().with_cpu();
@@ -40,10 +41,10 @@ fn main() {
       let unit_count = cpu_usage / 100.0 * 10.0;
       let full_unit_count = unit_count.floor() as usize;
       let last_unit_size = ((unit_count - full_unit_count as f32) * units.len() as f32).floor() as usize;
-      let _ = writeln!(pipe, "process ⎸{:?}@{:05.1}% ({}s) <span foreground='#{:02x}{:02x}{:02x}'>{:<20}</span>|",
+      let _ = writeln!(pipe, "process ⎸{:?}@{:05.1}% ({}) <span foreground='#{:02x}{:02x}{:02x}'>{:<20}</span>|",
         max_proc.name(),
         cpu_usage,
-        max_proc.run_time(),
+        format_duration(Duration::from_secs(max_proc.run_time())),
         (cpu_usage * 5.0).clamp(0.0, 255.0) as u8,
         255 - (cpu_usage * 2.0).clamp(10.0, 255.0) as u8,
         40,
