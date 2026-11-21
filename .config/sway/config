@@ -6,6 +6,7 @@ set $unselected_font_color #ffffff77
 set $background_color #0a0c109f
 set $selected_background_color #777777ff
 set $selected_border_color #ffffff55
+set $hint_border_color #ff000055
 set $transparent_color #00000000
 
 set $mod Mod4
@@ -116,7 +117,7 @@ exec --no-startup-id systemctl --user import-environment
 exec awww-daemon
 exec_always mako
 exec_always autotiling
-
+exec $ui_dir/idle_widget.fish "$transparent_color" "$selected_border_color" "$font_color" "$hint_border_color"
 workspace 1 output eDP-1
 workspace 11 output DP-1
 
