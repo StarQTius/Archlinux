@@ -1,5 +1,11 @@
 #!/bin/fish
 
+set --export CLAUDE_CONTEXT "
+  You are in a container. Assume mountpaths may have changed each time you are
+  invoked. You were invoked by `$(status -f) $argv` at $PWD. This script is
+  reachable by you. Use this information to deduce where you are.
+"
+
 if ! argparse "f/fresh" "s/session=" -- $argv
   exit "$status"
 end
@@ -26,6 +32,7 @@ docker run -it --rm \
   --env ANTHROPIC_AUTH_TOKEN \
   --env ANTHROPIC_API_KEY \
   --env ANTHROPIC_DEFAULT_SONNET_MODEL \
+  --env CLAUDE_CONTEXT \
   --volume .:/workspace \
   --volume $HOME/.claude-code-home:/home/claude/ \
   --volume $HOME:$HOME:ro \

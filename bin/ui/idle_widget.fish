@@ -11,7 +11,7 @@ switch (count $argv)
     exit 1
 end
 
-swayidle timeout 10 \
+swayidle timeout 30 \
   "swaymsg client.focused \
     '$transparent_color' \
     '$hint_border_color' \

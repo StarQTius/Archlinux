@@ -9,6 +9,7 @@ call plug#begin()
     Plug 'stevearc/oil.nvim', {'tag': 'v2.15.0'}
     Plug 'CopilotC-Nvim/CopilotChat.nvim', {'tag': 'v4.7.4'}
     Plug 'scottmckendry/cyberdream.nvim'
+    Plug 'tpope/vim-fugitive', {'tag': 'v3.7'}
 call plug#end()
 
 let s:make_background_transparent = get(g:, "make_background_transparent", "v:true")
