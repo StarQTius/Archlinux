@@ -10,10 +10,6 @@ git -C mirror/ fetch --all
 git -C mirror/ stash
 git -C mirror/ checkout origin/HEAD
 
-if test $(git stash list | wc --lines) -ne 0; then
-  git -C mirror/ stash pop || exit 1
-fi
-
 cp Dockerfile docker-compose.yml CMakeUserPresets.json mirror/
 sed --in-place "/volumes:/,+2{
   s|- .:/home/paulin/Unpadded|- .:/home/paulin/Unpadded/mirror|
@@ -21,6 +17,10 @@ sed --in-place "/volumes:/,+2{
 }" "mirror/docker-compose.yml"
 
 git -C mirror/ restore-mtime
+
+if test $(git stash list | wc --lines) -ne 0; then
+  git -C mirror/ stash pop || exit 1
+fi
 
 autoiwyu --root-path=/home/paulin/Unpadded/mirror/include/upd "doco --file mirror/docker-compose.yml run quick_iwyu" \
 && autoiwyu --root-path=/home/paulin/Unpadded/mirror/include/upd "doco --file mirror/docker-compose.yml run iwyu_k" \

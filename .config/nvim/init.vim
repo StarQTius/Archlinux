@@ -206,3 +206,10 @@ noremap ~ `
 " ...
 noremap ss <ESC>:ShellSplit<Enter>a
 noremap sb <ESC>:BrowseSplit<Enter>
+
+nnoremap <S-Up> {
+nnoremap <S-Down> }
+vnoremap <S-Up> {
+vnoremap <S-Down> }
+
+nnoremap x :x<Enter>
